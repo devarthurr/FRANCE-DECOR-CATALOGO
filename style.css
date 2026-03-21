@@ -1,3 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  background: linear-gradient(135deg, #081521, #132f4c);
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  background: #174db7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  border-bottom: 4px solid white;
+  position: relative;
+}
+
+.logo-img {
+  height: 85px;
+  width: 85px;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+/* NOME CENTRAL PC */
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.header-center h1 {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.instagram-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.instagram-link img {
+  width: 28px;
+}
+
+/* ================= HEADER ================= */
+
 /* ================= HEADER ================= */
 
 .header {
@@ -41,4 +103,166 @@
 
 .instagram-link img {
   width: 22px;
+}
+
+/* ================= CATÁLOGO ================= */
+
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: center;
+  gap: 50px;
+  padding: 60px 60px 80px 60px;
+  max-width: 1400px;
+  margin: 0 auto; /* CENTRALIZA TUDO */
+}
+
+.produto {
+  background: linear-gradient(145deg, #0d2438, #132f4c);
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.produto:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+}
+
+.produto h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.preview {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* ================= PRODUTO ABERTO ================= */
+
+.pagina-produto {
+  max-width: 700px;
+  margin: 60px auto;
+  background: linear-gradient(145deg, #0d2438, #132f4c);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+}
+
+.pagina-produto h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.imagem-grande {
+  width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+}
+
+/* SLIDER */
+
+.slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seta {
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  color: #174db7;
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.esquerda {
+  left: 10px;
+}
+
+.direita {
+  right: 10px;
+}
+
+/* BOTÕES */
+
+.botao-voltar {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  background: white;
+  color: #174db7;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.botao-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #1DB954;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.botao-whatsapp img {
+  width: 18px;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.8;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px;
+  }
+
+  .header-center {
+    position: static;
+    transform: none;
+    margin-top: 15px;
+  }
+
+  .header-center h1 {
+    font-size: 26px;
+    letter-spacing: 3px;
+  }
+
+  .catalogo {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 40px 25px;
+  }
+
 }

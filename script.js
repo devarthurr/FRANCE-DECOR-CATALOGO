@@ -1,5 +1,14 @@
-let produtos = [];
+let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 let categoriaAtual = "Todos";
+
+window.onload = function () {
+  gerarCategorias();
+  renderizar();
+};
+
+function salvarProdutos() {
+  localStorage.setItem("produtos", JSON.stringify(produtos));
+}
 
 function abrirLogin() {
   document.getElementById("loginModal").style.display = "block";
@@ -39,8 +48,15 @@ function adicionarProduto() {
     imagem: "images/" + imagem
   });
 
+  salvarProdutos();
   gerarCategorias();
   renderizar();
+
+  // limpar campos
+  document.getElementById("nome").value = "";
+  document.getElementById("categoria").value = "";
+  document.getElementById("preco").value = "";
+  document.getElementById("imagem").value = "";
 }
 
 function gerarCategorias() {
@@ -75,7 +91,7 @@ function renderizar() {
         ${
           produto.preco
           ? `<p class="preco">R$ ${produto.preco}</p>`
-          : `<p>Consultar valor</p>`
+          : `<p style="color:#0b1c2d;font-weight:bold;">Consultar valor</p>`
         }
       </div>
     `;

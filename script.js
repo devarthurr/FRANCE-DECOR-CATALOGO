@@ -1,6 +1,26 @@
 let produtos = [];
 let categoriaAtual = "Todos";
 
+function abrirLogin() {
+  document.getElementById("loginModal").style.display = "block";
+}
+
+function fazerLogin() {
+  const usuario = document.getElementById("loginUsuario").value;
+  const senha = document.getElementById("loginSenha").value;
+
+  if (usuario === "DECORFRANCE" && senha === "2026") {
+    document.getElementById("loginModal").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+  } else {
+    alert("Login inválido");
+  }
+}
+
+function fecharAdmin() {
+  document.getElementById("adminPanel").style.display = "none";
+}
+
 function adicionarProduto() {
   const nome = document.getElementById("nome").value;
   const categoria = document.getElementById("categoria").value;
@@ -8,7 +28,7 @@ function adicionarProduto() {
   const imagem = document.getElementById("imagem").value;
 
   if (!nome || !categoria || !imagem) {
-    alert("Preencha nome, categoria e nome da imagem.");
+    alert("Preencha nome, categoria e imagem.");
     return;
   }
 

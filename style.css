@@ -11,25 +11,6 @@ header {
   padding: 30px;
 }
 
-.admin {
-  background: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.admin input {
-  margin: 5px;
-  padding: 8px;
-}
-
-.admin button {
-  background: #132f4c;
-  color: white;
-  padding: 8px 15px;
-  border: none;
-  cursor: pointer;
-}
-
 nav {
   text-align: center;
   margin: 20px;
@@ -68,4 +49,52 @@ nav button {
 .preco {
   color: #1e4d7a;
   font-weight: bold;
+}
+
+footer {
+  background: #0b1c2d;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.cadeado {
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* MODAL LOGIN */
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  width: 300px;
+  margin: 150px auto;
+  text-align: center;
+}
+
+/* PAINEL ADMIN */
+
+.admin-panel {
+  display: none;
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  background: white;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }

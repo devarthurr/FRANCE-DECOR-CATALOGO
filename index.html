@@ -9,21 +9,39 @@
 
 <header>
   <h1>FRANCE DECOR</h1>
-  <p>Catálogo Oficial</p>
+  <p>Elegância & Sofisticação</p>
 </header>
-
-<section class="admin">
-  <h2>Adicionar Produto</h2>
-  <input type="text" id="nome" placeholder="Nome do Produto">
-  <input type="text" id="categoria" placeholder="Categoria">
-  <input type="number" id="preco" placeholder="Preço (opcional)">
-  <input type="text" id="imagem" placeholder="Nome da imagem (ex: sofa1.jpg)">
-  <button onclick="adicionarProduto()">Adicionar</button>
-</section>
 
 <nav id="categorias"></nav>
 
 <section id="catalogo" class="catalogo"></section>
+
+<footer>
+  © 2026 FRANCE DECOR
+  
+  <span class="cadeado" onclick="abrirLogin()">🔒</span>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <h3>Área Administrativa</h3>
+    <input type="text" id="loginUsuario" placeholder="Login">
+    <input type="password" id="loginSenha" placeholder="Senha">
+    <button onclick="fazerLogin()">Entrar</button>
+  </div>
+</div>
+
+<!-- PAINEL ADMIN -->
+<div id="adminPanel" class="admin-panel">
+  <h2>Painel Admin</h2>
+  <input type="text" id="nome" placeholder="Nome do Produto">
+  <input type="text" id="categoria" placeholder="Categoria">
+  <input type="number" id="preco" placeholder="Preço (opcional)">
+  <input type="text" id="imagem" placeholder="Nome da imagem (ex: sofa1.jpg)">
+  <button onclick="adicionarProduto()">Adicionar Produto</button>
+  <button onclick="fecharAdmin()">Fechar</button>
+</div>
 
 <script src="script.js"></script>
 </body>

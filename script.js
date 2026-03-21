@@ -9,8 +9,8 @@ function renderizarCatalogo() {
     card.className = "produto";
 
     card.innerHTML = `
-      <img src="${produto.imagens[0]}" class="preview">
       <h3>${produto.nome}</h3>
+      <img src="${produto.imagens[0]}" class="preview">
     `;
 
     card.onclick = () => abrirProduto(produto);
@@ -27,13 +27,13 @@ function abrirProduto(produto) {
       
       <a href="#" class="botao-voltar">← Voltar</a>
 
+      <h2>${produto.nome}</h2>
+
       <div class="slider-container">
         <button class="seta esquerda">❮</button>
         <img src="${produto.imagens[0]}" class="imagem-grande" id="imagemPrincipal">
         <button class="seta direita">❯</button>
       </div>
-
-      <h2>${produto.nome}</h2>
 
       ${
         produto.preco 
@@ -52,17 +52,13 @@ function abrirProduto(produto) {
 
   document.querySelector(".esquerda").onclick = () => {
     imagemAtual--;
-    if (imagemAtual < 0) {
-      imagemAtual = produto.imagens.length - 1;
-    }
+    if (imagemAtual < 0) imagemAtual = produto.imagens.length - 1;
     imagemPrincipal.src = produto.imagens[imagemAtual];
   };
 
   document.querySelector(".direita").onclick = () => {
     imagemAtual++;
-    if (imagemAtual >= produto.imagens.length) {
-      imagemAtual = 0;
-    }
+    if (imagemAtual >= produto.imagens.length) imagemAtual = 0;
     imagemPrincipal.src = produto.imagens[imagemAtual];
   };
 

@@ -1,23 +1,16 @@
 const produtos = [
   {
-    nome: "Sofá Luxo Paris",
-    categoria: "Sofás",
-    preco: "3500",
-    descricao: "Sofá sofisticado com acabamento premium.",
+    nome: "TOPOS DE BOLO",
+    categoria: "FESTAS",
+    preco: "",
+    descricao: "NOSSOS TOPOS DE BOLOS",
     imagens: [
-      "images/sofa1.jpg",
-      "images/sofa2.jpg",
-      "images/sofa3.jpg"
+      "images/decoracao.jpeg",
+      "images/decoracao1.jpeg",
+      "images/decoracao2.jpeg",
+      "images/decoracao3.jpeg",
+      "images/decoracao4.jpeg"
     ]
   },
-  {
-    nome: "Lustre Elegance",
-    categoria: "Iluminação",
-    preco: null,
-    descricao: "Lustre moderno para ambientes sofisticados.",
-    imagens: [
-      "images/lustre1.jpg",
-      "images/lustre2.jpg"
-    ]
-  }
+
 ];

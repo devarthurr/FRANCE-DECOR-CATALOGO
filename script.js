@@ -1,19 +1,12 @@
 const conteudo = document.getElementById("conteudo");
 
-/* ================= RENDER CATALOGO ================= */
-
 function renderizarCatalogo() {
-  conteudo.classList.remove("fade-in");
-  void conteudo.offsetWidth;
-  conteudo.classList.add("fade-in");
-
   conteudo.innerHTML = '<div class="catalogo"></div>';
   const catalogo = document.querySelector(".catalogo");
 
-  produtos.forEach((produto, index) => {
+  produtos.forEach((produto) => {
     const card = document.createElement("div");
     card.className = "produto";
-    card.style.animationDelay = `${index * 0.05}s`;
 
     card.innerHTML = `
       <img src="${produto.imagens[0]}" class="preview">
@@ -21,25 +14,18 @@ function renderizarCatalogo() {
     `;
 
     card.onclick = () => abrirProduto(produto);
-
     catalogo.appendChild(card);
   });
 }
 
-/* ================= ABRIR PRODUTO ================= */
-
 function abrirProduto(produto) {
-  conteudo.classList.remove("fade-in");
-  void conteudo.offsetWidth;
-  conteudo.classList.add("fade-in");
-
   conteudo.innerHTML = `
-    <div class="pagina-produto slide-up">
+    <div class="pagina-produto">
       <a href="#" class="botao-voltar">← Voltar ao catálogo</a>
 
       <img src="${produto.imagens[0]}" class="imagem-grande" id="imagemPrincipal">
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+      <div class="galeria-miniaturas">
         ${produto.imagens.map(img => `
           <img src="${img}" class="thumb">
         `).join("")}
@@ -70,7 +56,5 @@ function abrirProduto(produto) {
     };
   });
 }
-
-/* ================= INICIAR ================= */
 
 renderizarCatalogo();

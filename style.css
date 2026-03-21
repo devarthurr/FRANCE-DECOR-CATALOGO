@@ -1,19 +1,22 @@
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(135deg, #0b1c2d, #132f4c);
+  background: linear-gradient(135deg, #0a1a2a, #132f4c);
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .header {
-  background: #0b1c2d;
+  background: #0a1a2a;
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 60px;
+  padding: 20px 50px;
+  position: relative;
 }
+
+/* ESQUERDA */
 
 .header-left {
   display: flex;
@@ -22,22 +25,37 @@ body {
 }
 
 .logo {
-  height: 70px;
+  height: 65px;
 }
 
 .slogan {
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 2px;
   margin-top: 6px;
   opacity: 0.8;
 }
 
+/* CENTRO - MAIS PROFISSIONAL */
+
 .header-center {
-  font-family: 'Cinzel', serif;
-  font-size: 34px;
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
   letter-spacing: 6px;
   font-weight: 700;
+  transition: 0.4s ease;
+  cursor: default;
 }
+
+/* EFEITO 3D ELEGANTE */
+
+.header-center:hover {
+  transform: translateY(-3px) scale(1.05);
+  text-shadow: 
+    0 5px 15px rgba(0,0,0,0.5),
+    0 0 10px rgba(255,255,255,0.2);
+}
+
+/* DIREITA */
 
 .header-right a {
   color: white;
@@ -46,13 +64,15 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: 0.3s;
 }
 
 .header-right a:hover {
-  color: #25D366;
+  color: #E1306C;
+  transform: translateY(-2px);
 }
 
-/* MENU */
+/* ================= MENU ================= */
 
 nav {
   background: #132f4c;
@@ -69,9 +89,15 @@ nav button {
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
 }
 
-/* CATÁLOGO */
+nav button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* ================= CATÁLOGO ================= */
 
 .catalogo {
   display: grid;
@@ -90,7 +116,8 @@ nav button {
 }
 
 .produto:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 
 .preview {
@@ -105,7 +132,7 @@ nav button {
   font-weight: bold;
 }
 
-/* PÁGINA PRODUTO */
+/* ================= PÁGINA PRODUTO ================= */
 
 .pagina-produto {
   background: white;
@@ -115,26 +142,10 @@ nav button {
   max-width: 1100px;
 }
 
-.voltar {
-  background: #132f4c;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  cursor: pointer;
-  margin-bottom: 25px;
-  border-radius: 8px;
-}
-
 .detalhe-container {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
-  align-items: flex-start;
-}
-
-.galeria {
-  flex: 1;
-  max-width: 500px;
 }
 
 .imagem-grande {
@@ -144,54 +155,42 @@ nav button {
   border-radius: 18px;
 }
 
-.miniaturas {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-
 .thumb {
   width: 70px;
   height: 70px;
   object-fit: cover;
   border-radius: 10px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-.info {
-  flex: 1;
-  max-width: 450px;
+.thumb:hover {
+  transform: scale(1.1);
 }
 
-.whatsapp {
-  background: #25D366;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  margin-top: 20px;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-/* MOBILE */
+/* ================= MOBILE AJUSTADO ================= */
 
 @media (max-width: 900px) {
 
   .header {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-    padding: 20px;
-  }
-
-  .header-left {
-    align-items: center;
+    flex-direction: row;
+    padding: 15px 20px;
   }
 
   .header-center {
-    font-size: 24px;
-    letter-spacing: 4px;
+    font-size: 20px;
+    letter-spacing: 3px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .header-left {
+    align-items: flex-start;
+  }
+
+  .header-right {
+    margin-left: auto;
   }
 
   .catalogo {
@@ -201,7 +200,7 @@ nav button {
   }
 
   .preview {
-    height: 160px;
+    height: 150px;
   }
 
   .pagina-produto {
@@ -209,20 +208,7 @@ nav button {
     padding: 20px;
   }
 
-  .detalhe-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .imagem-grande {
-    height: 260px;
-  }
-
-  .info {
-    text-align: center;
-  }
-
-  .whatsapp {
-    width: 100%;
+    height: 250px;
   }
 }

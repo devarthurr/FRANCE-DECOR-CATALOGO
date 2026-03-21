@@ -21,7 +21,7 @@ main {
   width: 100%;
 }
 
-/* ================= HEADER ================= */
+/* ================= HEADER (PADRÃO PC) ================= */
 
 .header {
   background: linear-gradient(90deg, #081521, #0d2438);
@@ -32,11 +32,9 @@ main {
   position: relative;
 }
 
-/* LOGO ESQUERDA */
 .header-left {
   display: flex;
   flex-direction: column;
-  margin-left: 5px; /* pequeno espaço da borda */
 }
 
 .logo-img {
@@ -52,7 +50,6 @@ main {
   opacity: 0.8;
 }
 
-/* NOME CENTRALIZADO PERFEITO */
 .header-center {
   position: absolute;
   left: 50%;
@@ -69,15 +66,14 @@ main {
   white-space: nowrap;
 }
 
-/* ================= CATÁLOGO ================= */
+/* ================= CATÁLOGO PC (2 PRODUTOS MAIORES) ================= */
 
-/* COMO SÓ TEM 2 PRODUTOS, DEIXAR MAIORES */
 .catalogo {
   display: grid;
   grid-template-columns: repeat(2, 320px);
   justify-content: center;
-  gap: 50px;
-  padding: 60px 20px;
+  gap: 60px;
+  padding: 70px 20px;
 }
 
 .produto {
@@ -181,32 +177,40 @@ footer {
 
 @media (max-width: 768px) {
 
+  /* HEADER MOBILE: LOGO EM CIMA, NOME EMBAIXO */
+
   .header {
-    padding: 15px 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
   }
 
   .header-left {
-    margin-left: 0;
+    align-items: center;
   }
 
   .logo-img {
-    height: 48px;
+    height: 55px;
+  }
+
+  .header-center {
+    position: static;
+    transform: none;
+    margin-top: 10px;
   }
 
   .brand {
-    font-size: 22px;
-    letter-spacing: 3px;
+    font-size: 24px;
+    letter-spacing: 4px;
   }
 
-  /* NO CELULAR PRODUTOS RESPONSIVOS */
+  /* PRODUTOS VOLTAM AO NORMAL NO CELULAR */
+
   .catalogo {
-    grid-template-columns: 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     padding: 30px 20px;
-  }
-
-  .produto {
-    width: 100%;
   }
 
 }

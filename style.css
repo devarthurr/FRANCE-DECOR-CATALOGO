@@ -4,26 +4,20 @@ body {
   background: linear-gradient(135deg, #0b1c2d, #132f4c);
 }
 
-/* HEADER PREMIUM */
+/* HEADER */
 
-.topo {
+.header {
   background: #0b1c2d;
-  padding: 20px 40px;
   color: white;
-}
-
-.header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 20px 50px;
 }
 
-/* LOGO + SLOGAN */
-
-.logo-area {
+.header-left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 .logo {
@@ -37,39 +31,170 @@ body {
   opacity: 0.8;
 }
 
-/* NOME CENTRAL */
-
-.brand-name {
+.header-center {
   font-family: 'Cinzel', serif;
-  font-size: 32px;
+  font-size: 34px;
   letter-spacing: 6px;
   font-weight: 700;
-  text-align: center;
 }
 
-/* INSTAGRAM */
-
-.social a {
+.header-right a {
   color: white;
   text-decoration: none;
   font-weight: 600;
   transition: 0.3s;
 }
 
-.social a:hover {
+.header-right a:hover {
   color: #25D366;
+}
+
+/* MENU */
+
+nav {
+  background: #132f4c;
+  text-align: center;
+  padding: 15px;
+}
+
+nav button {
+  background: white;
+  color: #132f4c;
+  border: none;
+  padding: 8px 18px;
+  margin: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* CATÁLOGO */
+
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 30px;
+  padding: 40px;
+}
+
+.produto {
+  background: white;
+  border-radius: 18px;
+  padding: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.produto:hover {
+  transform: translateY(-8px);
+}
+
+.preview {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.preco {
+  color: #132f4c;
+  font-weight: bold;
+}
+
+/* PÁGINA DO PRODUTO */
+
+.pagina-produto {
+  background: white;
+  margin: 40px;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.voltar {
+  background: #132f4c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.detalhe-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.galeria {
+  flex: 1;
+  max-width: 500px;
+}
+
+.imagem-grande {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.miniaturas {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.thumb {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.thumb:hover {
+  transform: scale(1.1);
+}
+
+.info {
+  flex: 1;
+  max-width: 400px;
+}
+
+.whatsapp {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 /* RESPONSIVO */
 
 @media (max-width: 900px) {
-  .header-container {
+
+  .header {
     flex-direction: column;
     gap: 15px;
     text-align: center;
   }
 
-  .logo-area {
-    align-items: center;
+  .catalogo {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    padding: 20px;
+  }
+
+  .pagina-produto {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  .imagem-grande {
+    height: 300px;
   }
 }

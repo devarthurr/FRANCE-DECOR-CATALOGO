@@ -1,17 +1,33 @@
-body {
+/* RESET E BASE */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(135deg, #081521, #132f4c);
+}
+
+/* ESTRUTURA PRINCIPAL */
+
+body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 main {
-  flex: 1;
+  flex: 1; /* faz ocupar o espaço restante */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .header {
   background: linear-gradient(90deg, #081521, #0d2438);
@@ -57,13 +73,14 @@ main {
   white-space: nowrap;
 }
 
-/* CATÁLOGO */
+/* ================= CATÁLOGO ================= */
 
 .catalogo {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px;
   padding: 50px;
+  width: 100%;
 }
 
 .produto {
@@ -87,16 +104,17 @@ main {
   border-radius: 14px;
 }
 
-/* PÁGINA PRODUTO AJUSTADA */
+/* ================= PÁGINA PRODUTO ================= */
 
 .pagina-produto {
   background: white;
   margin: 60px auto;
   padding: 30px;
   border-radius: 20px;
-  max-width: 700px; /* agora menor */
+  max-width: 700px;
   box-shadow: 0 10px 35px rgba(0,0,0,0.4);
   text-align: center;
+  width: 100%;
 }
 
 .imagem-grande {
@@ -142,7 +160,7 @@ main {
   font-size: 14px;
 }
 
-/* BOTÃO WHATSAPP EMBAIXO */
+/* BOTÃO WHATSAPP */
 
 .botao-whatsapp {
   display: inline-flex;
@@ -167,17 +185,18 @@ main {
   width: 20px;
 }
 
-/* FOOTER FIXADO NO FINAL */
+/* ================= FOOTER FIXADO CORRETAMENTE ================= */
 
 footer {
   text-align: center;
   padding: 25px;
   color: white;
   opacity: 0.6;
-  margin-top: auto;
+  margin-top: auto; /* ESSENCIAL */
+  width: 100%;
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 
 @media (max-width: 900px) {
 
@@ -206,7 +225,7 @@ footer {
 
   .pagina-produto {
     margin: 20px;
-    max-width: 101%;
+    max-width: 100%;
   }
 
 }

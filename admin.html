@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Admin - FRANCE DECOR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin-container">
+
+<h2>Painel Administrativo</h2>
+
+<div id="login-area">
+  <input type="password" id="senha" placeholder="Digite a senha">
+  <button onclick="login()">Entrar</button>
+</div>
+
+<div id="painel" style="display:none;">
+
+  <input type="text" id="nome" placeholder="Nome do Produto">
+  <input type="number" id="preco" placeholder="Preço (opcional)">
+  <input type="text" id="categoria" placeholder="Categoria (Ex: Sofás, Lustres)">
+  <input type="file" id="imagens" accept="image/*" multiple>
+
+  <button onclick="adicionarProduto()">Adicionar Produto</button>
+
+  <h3>Produtos cadastrados</h3>
+  <div id="lista-admin"></div>
+
+</div>
+
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

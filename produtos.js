@@ -5,11 +5,11 @@ const produtos = [
     preco: "",
     descricao: "NOSSOS TOPOS DE BOLOS",
     imagens: [
-      "images/DECORAÇÕES/decoracao.jpeg",
-      "images/DECORAÇÕES/decoracao1.jpeg",
-      "images/DECORAÇÕES/decoracao2.jpeg",
-      "images/DECORAÇÕES/decoracao3.jpeg",
-      "images/DECORAÇÕES/decoracao4.jpeg"
+      "images/TOPOS DE BOLO/decoracao.jpeg",
+      "images/TOPOS DE BOLO/decoracao1.jpeg",
+      "images/TOPOS DE BOLO/decoracao2.jpeg",
+      "images/TOPOS DE BOLO/decoracao3.jpeg",
+      "images/TOPOS DE BOLO/decoracao4.jpeg"
     ]
   },
 

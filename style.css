@@ -1,102 +1,69 @@
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: #f4f6f9;
-}
-
-header {
-  background: #0b1c2d;
-  padding: 20px;
-  text-align: center;
-}
-
-.logo {
-  max-height: 80px;
-}
-
-nav {
-  text-align: center;
-  padding: 15px;
-  background: #132f4c;
-}
-
-nav button {
-  background: white;
-  color: #132f4c;
-  border: none;
-  padding: 8px 15px;
-  margin: 5px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.catalogo {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.produto {
-  background: white;
-  border-radius: 15px;
-  padding: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-.produto:hover {
-  transform: translateY(-5px);
-}
-
-.produto img {
-  width: 100%;
+.preview {
   height: 220px;
   object-fit: cover;
-  border-radius: 10px;
+  cursor: pointer;
 }
 
-.galeria {
+.pagina-produto {
+  padding: 20px;
+}
+
+.voltar {
+  background: #132f4c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.produto-detalhe {
   display: flex;
-  gap: 5px;
-  margin-top: 5px;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
-.galeria img {
-  width: 40px;
-  height: 40px;
+.imagem-grande {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+}
+
+.miniaturas {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumb {
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   cursor: pointer;
-  border-radius: 5px;
-  border: 2px solid transparent;
+  border-radius: 8px;
 }
 
-.galeria img:hover {
-  border: 2px solid #132f4c;
+.info {
+  max-width: 400px;
 }
 
-.preco {
-  color: #132f4c;
-  font-weight: bold;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #0b1c2d;
+.whatsapp {
+  background: #25D366;
   color: white;
-  margin-top: 30px;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-/* RESPONSIVO */
-
-@media (max-width: 600px) {
-  .catalogo {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+/* Responsivo */
+@media (max-width: 768px) {
+  .produto-detalhe {
+    flex-direction: column;
   }
 
-  .produto img {
-    height: 160px;
+  .imagem-grande {
+    max-width: 100%;
   }
 }

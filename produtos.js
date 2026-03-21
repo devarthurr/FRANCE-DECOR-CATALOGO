@@ -1,11 +1,13 @@
 const produtos = [
   {
-    nome: "Sofá Luxo Paris",
+    nome: "DECORACAO FRANCE DECOR",
     categoria: "Sofás",
     preco: "3500",
+    descricao: "Sofá sofisticado com acabamento premium.",
     imagens: [
-      "images/decoracao.jpeg",
-      "images/decoracao1.jpeg"
+      "images/decoracao",
+      "images/sofa2.jpg",
+      "images/sofa3.jpg"
     ]
   },
 ];

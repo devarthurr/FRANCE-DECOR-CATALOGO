@@ -58,53 +58,6 @@ html, body {
   width: 28px;
 }
 
-/* ================= HEADER ================= */
-
-/* ================= HEADER ================= */
-
-.header {
-  background: #174db7;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 18px;
-  border-bottom: 4px solid white;
-}
-
-.logo-img {
-  height: 65px;
-  width: 65px;
-  object-fit: contain;
-  border-radius: 18px;
-}
-
-.header-center {
-  flex: 1;
-  text-align: center;
-}
-
-.header-center h1 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: white;
-}
-
-.instagram-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 16px;
-}
-
-.instagram-link img {
-  width: 22px;
-}
-
 /* ================= CATÁLOGO ================= */
 
 .catalogo {

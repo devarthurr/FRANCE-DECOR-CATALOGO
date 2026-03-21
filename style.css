@@ -1,72 +1,80 @@
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(135deg, #0a1a2a, #132f4c);
+  background: linear-gradient(135deg, #081521, #132f4c);
 }
 
-/* HEADER */
+/* ================= HEADER PREMIUM ================= */
 
 .header {
-  background: #0a1a2a;
+  background: linear-gradient(90deg, #081521, #0d2438);
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 50px;
+  padding: 25px 60px;
   position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
-/* ESQUERDA */
+/* LOGO IMAGEM */
 
-.header-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* LOGO SEM ESTICAR */
-
-.logo {
+.logo-img {
   height: 65px;
   width: auto;
   object-fit: contain;
 }
 
+.header-left {
+  display: flex;
+  flex-direction: column;
+}
+
 .slogan {
   font-size: 12px;
-  letter-spacing: 2px;
-  margin-top: 5px;
+  letter-spacing: 3px;
+  margin-top: 6px;
   opacity: 0.8;
 }
 
-/* CENTRO */
+/* NOME CENTRAL ROBUSTO */
 
 .header-center {
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  letter-spacing: 6px;
-  font-weight: 700;
-  text-align: center;
-  transition: 0.4s;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.header-center a {
+/* FRANCE DECOR UMA LINHA + BRILHO */
+
+.brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 8px;
   text-decoration: none;
   color: white;
+  white-space: nowrap; /* impede quebrar linha */
+  transition: 0.4s ease;
 }
 
-.header-center:hover {
-  transform: translateY(-4px) scale(1.05);
-  text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+/* EFEITO BRILHO + PROFUNDIDADE */
+
+.brand:hover {
+  transform: translateY(-5px) scale(1.05);
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.6),
+    0 0 18px rgba(255,255,255,0.4),
+    0 8px 25px rgba(0,0,0,0.6);
 }
 
-/* CATÁLOGO */
+/* ================= CATÁLOGO ================= */
 
 .catalogo {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px;
-  padding: 40px;
+  padding: 50px;
 }
 
 .produto {
@@ -80,7 +88,7 @@ body {
 
 .produto:hover {
   transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
 .preview {
@@ -90,12 +98,7 @@ body {
   border-radius: 12px;
 }
 
-.preco {
-  color: #132f4c;
-  font-weight: bold;
-}
-
-/* PÁGINA PRODUTO */
+/* ================= PÁGINA PRODUTO ================= */
 
 .pagina-produto {
   background: white;
@@ -103,22 +106,6 @@ body {
   padding: 40px;
   border-radius: 20px;
   max-width: 1100px;
-}
-
-.voltar {
-  background: #132f4c;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  border-radius: 8px;
-}
-
-.detalhe-container {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
 }
 
 .imagem-grande {
@@ -140,26 +127,23 @@ body {
   transform: scale(1.1);
 }
 
-/* MOBILE */
+/* ================= MOBILE PREMIUM ================= */
 
 @media (max-width: 900px) {
 
   .header {
-    padding: 15px 20px;
+    padding: 20px;
   }
 
-  .header-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    letter-spacing: 3px;
+  .brand {
+    font-size: 22px;
+    letter-spacing: 4px;
   }
 
   .catalogo {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    padding: 15px;
+    padding: 20px;
   }
 
   .preview {
@@ -171,11 +155,7 @@ body {
     padding: 20px;
   }
 
-  .detalhe-container {
-    flex-direction: column;
-  }
-
   .imagem-grande {
-    height: 250px;
+    height: 260px;
   }
 }

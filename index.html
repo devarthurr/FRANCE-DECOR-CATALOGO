@@ -7,20 +7,23 @@
 </head>
 <body>
 
-<header class="topo">
-  <div class="logo-area">
-    <img src="logo.png" class="logo">
-    <h1>FRANCE DECOR</h1>
-  </div>
-
-  <nav id="menu-categorias" class="menu-categorias"></nav>
+<header>
+  <h1>FRANCE DECOR</h1>
+  <p>Catálogo Oficial</p>
 </header>
 
-<section id="catalogo" class="catalogo"></section>
+<section class="admin">
+  <h2>Adicionar Produto</h2>
+  <input type="text" id="nome" placeholder="Nome do Produto">
+  <input type="text" id="categoria" placeholder="Categoria">
+  <input type="number" id="preco" placeholder="Preço (opcional)">
+  <input type="text" id="imagem" placeholder="Nome da imagem (ex: sofa1.jpg)">
+  <button onclick="adicionarProduto()">Adicionar</button>
+</section>
 
-<footer>
-  © 2026 FRANCE DECOR - Todos os direitos reservados
-</footer>
+<nav id="categorias"></nav>
+
+<section id="catalogo" class="catalogo"></section>
 
 <script src="script.js"></script>
 </body>

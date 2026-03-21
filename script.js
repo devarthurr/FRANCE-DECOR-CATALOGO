@@ -1,20 +1,40 @@
-let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+let produtos = [];
 let categoriaAtual = "Todos";
 
-function gerarCategorias() {
-  const menu = document.getElementById("menu-categorias");
-  menu.innerHTML = "";
+function adicionarProduto() {
+  const nome = document.getElementById("nome").value;
+  const categoria = document.getElementById("categoria").value;
+  const preco = document.getElementById("preco").value;
+  const imagem = document.getElementById("imagem").value;
 
+  if (!nome || !categoria || !imagem) {
+    alert("Preencha nome, categoria e nome da imagem.");
+    return;
+  }
+
+  produtos.push({
+    nome,
+    categoria,
+    preco: preco || null,
+    imagem: "images/" + imagem
+  });
+
+  gerarCategorias();
+  renderizar();
+}
+
+function gerarCategorias() {
+  const nav = document.getElementById("categorias");
   const categorias = ["Todos", ...new Set(produtos.map(p => p.categoria))];
 
+  nav.innerHTML = "";
+
   categorias.forEach(cat => {
-    menu.innerHTML += `
-      <button onclick="filtrarCategoria('${cat}')">${cat}</button>
-    `;
+    nav.innerHTML += `<button onclick="filtrar('${cat}')">${cat}</button>`;
   });
 }
 
-function filtrarCategoria(cat) {
+function filtrar(cat) {
   categoriaAtual = cat;
   renderizar();
 }
@@ -23,40 +43,21 @@ function renderizar() {
   const catalogo = document.getElementById("catalogo");
   catalogo.innerHTML = "";
 
-  const produtosFiltrados = categoriaAtual === "Todos"
+  const filtrados = categoriaAtual === "Todos"
     ? produtos
     : produtos.filter(p => p.categoria === categoriaAtual);
 
-  produtosFiltrados.forEach(produto => {
-
-    let miniaturas = "";
-    produto.imagens.forEach(img => {
-      miniaturas += `<img src="${img}" onclick="trocarImagem('${produto.id}','${img}')">`;
-    });
-
+  filtrados.forEach(produto => {
     catalogo.innerHTML += `
       <div class="produto">
-        <img src="${produto.imagens[0]}" class="imagem-principal" id="img-${produto.id}">
-        <div class="miniaturas">${miniaturas}</div>
-        <div class="produto-info">
-          <h3>${produto.nome}</h3>
-          ${
-            produto.preco
-            ? `<p class="preco">R$ ${produto.preco}</p>
-               <a target="_blank" href="https://wa.me/5599999999999?text=Olá, tenho interesse no produto ${produto.nome}">
-               <button class="btn-whats">Comprar</button></a>`
-            : `<a target="_blank" href="https://wa.me/5599999999999?text=Olá, gostaria de consultar o valor do produto ${produto.nome}">
-               <button class="btn-whats">Consultar valor</button></a>`
-          }
-        </div>
+        <img src="${produto.imagem}">
+        <h3>${produto.nome}</h3>
+        ${
+          produto.preco
+          ? `<p class="preco">R$ ${produto.preco}</p>`
+          : `<p>Consultar valor</p>`
+        }
       </div>
     `;
   });
 }
-
-function trocarImagem(id, nova) {
-  document.getElementById("img-" + id).src = nova;
-}
-
-gerarCategorias();
-renderizar();

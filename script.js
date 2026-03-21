@@ -38,7 +38,7 @@ function abrirProduto(produto) {
         produto.preco 
         ? `<p><strong>${produto.preco}</strong></p>`
         : `
-        <a href="https://wa.me/55SEUNUMERO" target="_blank" class="botao-whatsapp">
+        <a href="https://wa.me/55S83993314078" target="_blank" class="botao-whatsapp">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
           Consultar valor
         </a>`

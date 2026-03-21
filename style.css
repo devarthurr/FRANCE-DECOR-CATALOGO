@@ -235,4 +235,37 @@ footer {
     padding: 20px;
   }
 
+  /* ===== SLIDER ===== */
+
+.slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seta {
+  position: absolute;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.seta:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.esquerda {
+  left: 10px;
+}
+
+.direita {
+  right: 10px;
+}
+
 }

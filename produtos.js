@@ -1,7 +1,7 @@
 const produtos = [
   {
-    nome: "TOPOS DE BOLO",
-    categoria: "FESTAS",
+    nome: "Topo De Bolo",
+    categoria: "",
     preco: "",
     descricao: "NOSSOS TOPOS DE BOLOS",
     imagens: [
@@ -9,21 +9,29 @@ const produtos = [
       "images/TOPOS DE BOLO/decoracao1.jpeg",
       "images/TOPOS DE BOLO/decoracao2.jpeg",
       "images/TOPOS DE BOLO/decoracao3.jpeg",
-      "images/TOPOS DE BOLO/decoracao4.jpeg"
-    ]
-  },
-
-    {
-    nome: "TOPOS DE BOLO",
-    categoria: "FESTAS",
-    preco: "",
-    descricao: "NOSSOS TOPOS DE BOLOS",
-    imagens: [
-      "images/TOPOS DE BOLO/decoracao.jpeg",
-      "images/TOPOS DE BOLO/decoracao1.jpeg",
-      "images/TOPOS DE BOLO/decoracao2.jpeg",
-      "images/TOPOS DE BOLO/decoracao3.jpeg",
-      "images/TOPOS DE BOLO/decoracao4.jpeg"
+      "images/TOPOS DE BOLO/decoracao4.jpeg",
+      "images/TOPOS DE BOLO/decoracao5.jpeg",
+      "images/TOPOS DE BOLO/decoracao6.jpeg",
+      "images/TOPOS DE BOLO/decoracao7.jpeg",
+      "images/TOPOS DE BOLO/decoracao8.jpeg",
+      "images/TOPOS DE BOLO/decoracao9.jpeg",
+      "images/TOPOS DE BOLO/decoracao10.jpeg",
+      "images/TOPOS DE BOLO/decoracao11.jpeg",
+      "images/TOPOS DE BOLO/decoracao12.jpeg",
+      "images/TOPOS DE BOLO/decoracao13.jpeg",
+      "images/TOPOS DE BOLO/decoracao14.jpeg",
+      "images/TOPOS DE BOLO/decoracao15.jpeg",
+      "images/TOPOS DE BOLO/decoracao16.jpeg",
+      "images/TOPOS DE BOLO/decoracao17.jpeg",
+      "images/TOPOS DE BOLO/decoracao18.jpeg",
+      "images/TOPOS DE BOLO/decoracao19.jpeg",
+      "images/TOPOS DE BOLO/decoracao20.jpeg",
+      "images/TOPOS DE BOLO/decoracao21.jpeg",
+      "images/TOPOS DE BOLO/decoracao22.jpeg",
+      "images/TOPOS DE BOLO/decoracao23.jpeg",
+      "images/TOPOS DE BOLO/decoracao24.jpeg",
+      "images/TOPOS DE BOLO/decoracao25.jpeg",
+      "images/TOPOS DE BOLO/decoracao26.jpeg",
     ]
   },
 

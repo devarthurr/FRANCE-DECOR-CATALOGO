@@ -77,22 +77,23 @@ main {
 }
 
 .produto {
-  background: linear-gradient(145deg, #0d2438, #132f4c);
+  background: white; /* VOLTOU PARA BRANCO */
+  color: #0d2438;
   border-radius: 18px;
   padding: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
   cursor: pointer;
   transition: 0.3s;
 }
 
 .produto:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
 }
 
 .produto h3 {
   margin-top: 15px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .preview {
@@ -105,13 +106,14 @@ main {
 /* ================= PRODUTO ABERTO ================= */
 
 .pagina-produto {
-  background: linear-gradient(145deg, #0d2438, #132f4c);
+  background: white; /* BRANCO */
+  color: #0d2438;
   margin: 40px auto;
   padding: 30px;
   border-radius: 20px;
   max-width: 600px;
   text-align: center;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
 }
 
 .imagem-grande {
@@ -119,7 +121,7 @@ main {
   max-height: 300px;
   object-fit: contain;
   border-radius: 15px;
-  background: rgba(255,255,255,0.05);
+  background: #f4f4f4;
   padding: 15px;
 }
 
@@ -150,8 +152,8 @@ main {
   display: inline-block;
   margin-bottom: 15px;
   padding: 6px 16px;
-  background: white;
-  color: #0d2438;
+  background: #0d2438;
+  color: white;
   border-radius: 30px;
   text-decoration: none;
   font-size: 13px;
@@ -221,12 +223,16 @@ footer {
     letter-spacing: 4px;
   }
 
-  /* PRODUTOS COMO NA VERSÃO ANTERIOR */
+  /* PRODUTOS MAIORES NO CELULAR */
 
   .catalogo {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 30px 20px;
+    grid-template-columns: 1fr; /* UM POR LINHA */
+    gap: 30px;
+    padding: 30px 25px;
+  }
+
+  .produto {
+    padding: 20px;
   }
 
 }

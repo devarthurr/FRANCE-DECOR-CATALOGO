@@ -7,42 +7,31 @@ html, body {
   padding: 0;
   font-family: 'Montserrat', sans-serif;
   color: white;
-  background: linear-gradient(135deg, #081521, #132f4c);
+  background: linear-gradient(135deg, #081521, #132f4c); /* FUNDO ANTIGO */
 }
 
-/* ================= HEADER ================= */
+/* ================= HEADER (PARTE DE CIMA) ================= */
 
 .header {
-  background: #174db7;
+  background: #174db7; /* azul da logo */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 60px;
-  border-bottom: 4px solid white;
-  position: relative;
+  padding: 20px 40px;
+  border-bottom: 4px solid white; /* LINHA BRANCA */
 }
 
 .logo-img {
-  height: 85px;
-  width: 85px;
+  height: 90px;
+  width: 90px;
   object-fit: contain;
   border-radius: 20px;
 }
 
-/* NOME CENTRAL PC */
-
 .header-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-}
-
-.header-center h1 {
-  margin: 0;
-  font-size: 40px;
+  font-size: 38px;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 }
 
 .instagram-link {
@@ -58,22 +47,26 @@ html, body {
   width: 28px;
 }
 
+/* ================= PARTE DE BAIXO ================= */
+
+main {
+  padding-top: 40px;
+}
+
 /* ================= CATÁLOGO ================= */
 
 .catalogo {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 350px);
   justify-content: center;
-  gap: 50px;
-  padding: 60px 60px 80px 60px;
-  max-width: 1400px;
-  margin: 0 auto; /* CENTRALIZA TUDO */
+  gap: 60px;
+  padding: 40px 20px 80px 20px;
 }
 
 .produto {
   background: linear-gradient(145deg, #0d2438, #132f4c);
   border-radius: 20px;
-  padding: 25px;
+  padding: 20px;
   text-align: center;
   cursor: pointer;
   transition: 0.3s;
@@ -101,11 +94,11 @@ html, body {
 /* ================= PRODUTO ABERTO ================= */
 
 .pagina-produto {
-  max-width: 700px;
-  margin: 60px auto;
+  max-width: 650px;
+  margin: 50px auto;
   background: linear-gradient(145deg, #0d2438, #132f4c);
   border-radius: 25px;
-  padding: 35px;
+  padding: 30px;
   text-align: center;
   box-shadow: 0 12px 35px rgba(0,0,0,0.6);
 }
@@ -117,11 +110,11 @@ html, body {
 
 .imagem-grande {
   width: 100%;
-  max-height: 380px;
+  max-height: 350px;
   object-fit: contain;
   border-radius: 15px;
   background: rgba(255,255,255,0.05);
-  padding: 15px;
+  padding: 10px;
 }
 
 /* SLIDER */
@@ -187,7 +180,7 @@ html, body {
 
 footer {
   text-align: center;
-  padding: 30px;
+  padding: 25px;
   opacity: 0.8;
 }
 
@@ -196,20 +189,16 @@ footer {
 @media (max-width: 768px) {
 
   .header {
-    flex-direction: column;
-    align-items: center;
-    padding: 25px 20px;
+    padding: 15px 20px;
+  }
+
+  .logo-img {
+    height: 70px;
+    width: 70px;
   }
 
   .header-center {
-    position: static;
-    transform: none;
-    margin-top: 15px;
-  }
-
-  .header-center h1 {
-    font-size: 26px;
-    letter-spacing: 3px;
+    font-size: 22px;
   }
 
   .catalogo {

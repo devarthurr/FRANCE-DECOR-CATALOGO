@@ -8,6 +8,7 @@ html, body {
   height: 100%;
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(135deg, #081521, #132f4c);
+  color: white;
 }
 
 body {
@@ -21,11 +22,10 @@ main {
   width: 100%;
 }
 
-/* ================= HEADER (PADRÃO PC) ================= */
+/* ================= HEADER PC ================= */
 
 .header {
   background: linear-gradient(90deg, #081521, #0d2438);
-  color: white;
   display: flex;
   align-items: center;
   padding: 20px 50px;
@@ -66,7 +66,7 @@ main {
   white-space: nowrap;
 }
 
-/* ================= CATÁLOGO PC (2 PRODUTOS MAIORES) ================= */
+/* ================= CATÁLOGO PC ================= */
 
 .catalogo {
   display: grid;
@@ -77,16 +77,22 @@ main {
 }
 
 .produto {
-  background: white;
+  background: linear-gradient(145deg, #0d2438, #132f4c);
   border-radius: 18px;
-  padding: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   cursor: pointer;
   transition: 0.3s;
 }
 
 .produto:hover {
   transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+}
+
+.produto h3 {
+  margin-top: 15px;
+  font-weight: 500;
 }
 
 .preview {
@@ -99,13 +105,13 @@ main {
 /* ================= PRODUTO ABERTO ================= */
 
 .pagina-produto {
-  background: white;
+  background: linear-gradient(145deg, #0d2438, #132f4c);
   margin: 40px auto;
-  padding: 25px;
-  border-radius: 18px;
+  padding: 30px;
+  border-radius: 20px;
   max-width: 600px;
   text-align: center;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.6);
 }
 
 .imagem-grande {
@@ -113,8 +119,8 @@ main {
   max-height: 300px;
   object-fit: contain;
   border-radius: 15px;
-  background: #f4f4f4;
-  padding: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
 }
 
 .galeria-miniaturas {
@@ -131,6 +137,11 @@ main {
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.thumb:hover {
+  transform: scale(1.05);
 }
 
 /* BOTÕES */
@@ -139,11 +150,12 @@ main {
   display: inline-block;
   margin-bottom: 15px;
   padding: 6px 16px;
-  background: #0d2438;
-  color: white;
+  background: white;
+  color: #0d2438;
   border-radius: 30px;
   text-decoration: none;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .botao-whatsapp {
@@ -158,6 +170,11 @@ main {
   text-decoration: none;
   font-weight: 600;
   margin-top: 15px;
+  transition: 0.3s;
+}
+
+.botao-whatsapp:hover {
+  transform: translateY(-3px);
 }
 
 .botao-whatsapp img {
@@ -169,7 +186,6 @@ main {
 footer {
   text-align: center;
   padding: 20px;
-  color: white;
   opacity: 0.7;
 }
 
@@ -177,7 +193,7 @@ footer {
 
 @media (max-width: 768px) {
 
-  /* HEADER MOBILE: LOGO EM CIMA, NOME EMBAIXO */
+  /* HEADER MOBILE */
 
   .header {
     flex-direction: column;
@@ -205,7 +221,7 @@ footer {
     letter-spacing: 4px;
   }
 
-  /* PRODUTOS VOLTAM AO NORMAL NO CELULAR */
+  /* PRODUTOS COMO NA VERSÃO ANTERIOR */
 
   .catalogo {
     grid-template-columns: repeat(2, 1fr);

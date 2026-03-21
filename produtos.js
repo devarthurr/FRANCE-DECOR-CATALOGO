@@ -1,17 +1,20 @@
 const produtos = [
   {
-    nome: "DECORAÇÃO FRANCE DECOR",
-    categoria: "FESTAS",
-    preco: "",
-    imagem: "images/decoracao1.jpeg"
-    imagem: "images/decoracao2.jpeg"
-    imagem: "images/decoracao3.jpeg"
-    imagem: "images/decoracao4.jpeg"
+    nome: "Sofá Luxo Paris",
+    categoria: "Sofás",
+    preco: "3500",
+    imagens: [
+      "images/sofa1.jpg",
+      "images/sofa2.jpg"
+    ]
   },
   {
     nome: "Lustre Elegance",
     categoria: "Iluminação",
     preco: null,
-    imagem: "images/lustre1.jpg"
+    imagens: [
+      "images/lustre1.jpg",
+      "images/lustre2.jpg"
+    ]
   }
 ];

@@ -21,6 +21,10 @@ function filtrar(cat) {
   renderizar();
 }
 
+function trocarImagem(idProduto, novaImagem) {
+  document.getElementById("img-" + idProduto).src = novaImagem;
+}
+
 function renderizar() {
   const catalogo = document.getElementById("catalogo");
   catalogo.innerHTML = "";
@@ -29,16 +33,27 @@ function renderizar() {
     ? produtos
     : produtos.filter(p => p.categoria === categoriaAtual);
 
-  filtrados.forEach(produto => {
+  filtrados.forEach((produto, index) => {
+
+    let galeriaHTML = "";
+    produto.imagens.forEach(img => {
+      galeriaHTML += `
+        <img src="${img}" onclick="trocarImagem(${index}, '${img}')">
+      `;
+    });
+
     catalogo.innerHTML += `
       <div class="produto">
-        <img src="${produto.imagem}">
+        <img src="${produto.imagens[0]}" id="img-${index}">
         <h3>${produto.nome}</h3>
         ${
           produto.preco
           ? `<p class="preco">R$ ${produto.preco}</p>`
-          : `<p style="color:#0b1c2d;font-weight:bold;">Consultar valor</p>`
+          : `<p class="preco">Consultar valor</p>`
         }
+        <div class="galeria">
+          ${galeriaHTML}
+        </div>
       </div>
     `;
   });

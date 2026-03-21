@@ -1,104 +1,69 @@
-let categoriaAtual = "Todos";
-const whatsappNumero = "5511999999999"; // COLOQUE SEU NÚMERO
-
-window.onload = function () {
-  gerarCategorias();
-  renderizarCatalogo();
-};
+const conteudo = document.getElementById("conteudo");
+const categoriasNav = document.getElementById("categorias");
 
 function gerarCategorias() {
-  const nav = document.getElementById("categorias");
-  const categorias = ["Todos", ...new Set(produtos.map(p => p.categoria))];
-
-  nav.innerHTML = "";
+  const categorias = [...new Set(produtos.map(p => p.categoria))];
 
   categorias.forEach(cat => {
     const btn = document.createElement("button");
     btn.textContent = cat;
-    btn.onclick = () => {
-      categoriaAtual = cat;
-      renderizarCatalogo();
-    };
-    nav.appendChild(btn);
+    btn.onclick = () => mostrarProdutos(cat);
+    categoriasNav.appendChild(btn);
   });
 }
 
-function renderizarCatalogo() {
-  const conteudo = document.getElementById("conteudo");
-  conteudo.innerHTML = "";
+function mostrarProdutos(categoria) {
+  conteudo.innerHTML = `<div class="catalogo"></div>`;
+  const catalogo = document.querySelector(".catalogo");
 
-  const filtrados = categoriaAtual === "Todos"
-    ? produtos
-    : produtos.filter(p => p.categoria === categoriaAtual);
-
-  const grid = document.createElement("div");
-  grid.className = "catalogo";
-
-  filtrados.forEach(produto => {
-    const indexReal = produtos.indexOf(produto);
-
-    const card = document.createElement("div");
-    card.className = "produto";
-    card.onclick = () => abrirProduto(indexReal);
-
-    card.innerHTML = `
-      <img src="${produto.imagens[0]}" class="preview">
-      <h3>${produto.nome}</h3>
-      ${
-        produto.preco
-        ? `<p class="preco">R$ ${produto.preco}</p>`
-        : `<p class="preco">Consultar valor</p>`
-      }
-    `;
-
-    grid.appendChild(card);
-  });
-
-  conteudo.appendChild(grid);
+  produtos
+    .filter(p => p.categoria === categoria)
+    .forEach((produto, index) => {
+      catalogo.innerHTML += `
+        <div class="produto" onclick="abrirProduto(${index})">
+          <img src="${produto.imagens[0]}" class="preview">
+          <h3>${produto.nome}</h3>
+          <p class="preco">
+            ${produto.preco ? "R$ " + produto.preco : "Consultar valor"}
+          </p>
+        </div>
+      `;
+    });
 }
 
 function abrirProduto(index) {
   const produto = produtos[index];
-  const conteudo = document.getElementById("conteudo");
-
-  let thumbs = "";
-  produto.imagens.forEach(img => {
-    thumbs += `<img src="${img}" class="thumb" onclick="trocarImagem('${img}')">`;
-  });
 
   conteudo.innerHTML = `
     <div class="pagina-produto">
-      <button class="voltar" onclick="renderizarCatalogo()">← Voltar</button>
+      <button class="voltar" onclick="location.reload()">Voltar</button>
 
       <div class="detalhe-container">
-
         <div class="galeria">
-          <img src="${produto.imagens[0]}" id="imagemPrincipal" class="imagem-grande">
+          <img src="${produto.imagens[0]}" class="imagem-grande" id="imagemPrincipal">
+
           <div class="miniaturas">
-            ${thumbs}
+            ${produto.imagens.map(img =>
+              `<img src="${img}" class="thumb" onclick="trocarImagem('${img}')">`
+            ).join("")}
           </div>
         </div>
 
         <div class="info">
           <h2>${produto.nome}</h2>
-          <p>${produto.descricao}</p>
-          ${
-            produto.preco
-            ? `<h3>R$ ${produto.preco}</h3>`
-            : `<h3>Consultar valor</h3>`
-          }
+          <p>${produto.preco ? "R$ " + produto.preco : "Consultar valor"}</p>
 
-          <a href="https://wa.me/${whatsappNumero}?text=Olá, tenho interesse no produto ${produto.nome}" target="_blank">
+          <a href="https://wa.me/SEUNUMEROAQUI" target="_blank">
             <button class="whatsapp">Falar no WhatsApp</button>
           </a>
-
         </div>
-
       </div>
     </div>
   `;
 }
 
-function trocarImagem(nova) {
-  document.getElementById("imagemPrincipal").src = nova;
+function trocarImagem(src) {
+  document.getElementById("imagemPrincipal").src = src;
 }
+
+gerarCategorias();

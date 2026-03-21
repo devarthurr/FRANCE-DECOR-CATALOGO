@@ -22,7 +22,7 @@ function abrirProduto(produto) {
   conteudo.innerHTML = `
     <div class="pagina-produto">
       
-      <a href="#" class="botao-voltar">← Voltar ao catálogo</a>
+      <a href="#" class="botao-voltar">← Voltar</a>
 
       <img src="${produto.imagens[0]}" class="imagem-grande" id="imagemPrincipal">
 
@@ -36,7 +36,7 @@ function abrirProduto(produto) {
 
       ${
         produto.preco 
-        ? `<p style="font-weight:600; font-size:20px;">${produto.preco}</p>`
+        ? `<p><strong>${produto.preco}</strong></p>`
         : `
         <a href="https://wa.me/55SEUNUMERO" target="_blank" class="botao-whatsapp">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">

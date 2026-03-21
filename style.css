@@ -1,18 +1,51 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0b1c2d, #132f4c);
+  color: #333;
 }
 
-header {
+/* TOPO */
+
+.topo {
   background: #0b1c2d;
-  padding: 20px;
+  color: white;
+  padding-bottom: 20px;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  font-size: 14px;
+}
+
+.slogan {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.instagram a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.instagram a:hover {
+  color: #25D366;
+}
+
+.logo-container {
   text-align: center;
+  margin-top: 10px;
 }
 
 .logo {
-  max-height: 80px;
+  max-height: 90px;
 }
+
+/* MENU */
 
 nav {
   background: #132f4c;
@@ -24,38 +57,52 @@ nav button {
   background: white;
   color: #132f4c;
   border: none;
-  padding: 8px 15px;
+  padding: 8px 18px;
   margin: 5px;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
 }
+
+nav button:hover {
+  background: #0b1c2d;
+  color: white;
+}
+
+/* CATÁLOGO */
 
 .catalogo {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 30px;
+  padding: 40px;
 }
 
 .produto {
   background: white;
-  border-radius: 15px;
-  padding: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.3);
   cursor: pointer;
-  transition: 0.3s;
+  transition: transform 0.4s, box-shadow 0.4s;
+  transform-style: preserve-3d;
 }
 
 .produto:hover {
-  transform: translateY(-5px);
+  transform: rotateY(8deg) rotateX(5deg) scale(1.05);
+  box-shadow: 0 25px 40px rgba(0,0,0,0.5);
 }
 
 .preview {
   width: 100%;
-  height: 220px;
+  height: 230px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 15px;
+}
+
+.produto h3 {
+  margin-top: 10px;
 }
 
 .preco {
@@ -63,8 +110,13 @@ nav button {
   font-weight: bold;
 }
 
+/* PÁGINA PRODUTO */
+
 .pagina-produto {
-  padding: 20px;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  margin: 30px;
 }
 
 .voltar {
@@ -74,32 +126,38 @@ nav button {
   padding: 8px 15px;
   margin-bottom: 20px;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .detalhe-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 50px;
 }
 
 .imagem-grande {
   width: 100%;
   max-width: 500px;
-  border-radius: 15px;
+  border-radius: 20px;
 }
 
 .miniaturas {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .thumb {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.thumb:hover {
+  transform: scale(1.1);
 }
 
 .info {
@@ -111,9 +169,15 @@ nav button {
   color: white;
   border: none;
   padding: 12px 20px;
-  margin-top: 15px;
+  margin-top: 20px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.whatsapp:hover {
+  transform: scale(1.05);
 }
 
 footer {
@@ -121,12 +185,31 @@ footer {
   padding: 20px;
   background: #0b1c2d;
   color: white;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
+/* RESPONSIVO */
+
 @media (max-width: 768px) {
+
+  .top-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+  }
+
+  .catalogo {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    padding: 20px;
+  }
+
   .detalhe-container {
     flex-direction: column;
+  }
+
+  .pagina-produto {
+    margin: 10px;
+    padding: 20px;
   }
 
   .preview {

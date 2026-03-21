@@ -16,13 +16,20 @@ body {
   position: relative;
 }
 
+/* ESQUERDA */
+
 .header-left {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
+
+/* LOGO SEM ESTICAR */
 
 .logo {
   height: 65px;
+  width: auto;
+  object-fit: contain;
 }
 
 .slogan {
@@ -31,6 +38,8 @@ body {
   margin-top: 5px;
   opacity: 0.8;
 }
+
+/* CENTRO */
 
 .header-center {
   font-family: 'Playfair Display', serif;
@@ -41,23 +50,14 @@ body {
   transition: 0.4s;
 }
 
+.header-center a {
+  text-decoration: none;
+  color: white;
+}
+
 .header-center:hover {
   transform: translateY(-4px) scale(1.05);
   text-shadow: 0 5px 20px rgba(0,0,0,0.5);
-}
-
-.header-right a {
-  color: white;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.3s;
-}
-
-.header-right a:hover {
-  color: #E1306C;
-  transform: translateY(-2px);
 }
 
 /* CATÁLOGO */

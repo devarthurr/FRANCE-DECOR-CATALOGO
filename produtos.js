@@ -183,10 +183,10 @@ const produtos = [
   },
 
   {
-    nome: "CAIXA PERSONALIZADA POLAROIDS",
+    nome: "FOTOS POLAROID",
     categoria: "",
-    preco: "8,00",
-    descricao: "Caixa personalizada com 12 Polaroids",
+    preco: "",
+    descricao: "Pequena: R$0,50 Grande: R$1,00",
     imagens: [
       "images/FOTOS POLAROID/FOTOS POLAROID (1).jpeg",
       "images/FOTOS POLAROID/FOTOS POLAROID (2).jpeg",

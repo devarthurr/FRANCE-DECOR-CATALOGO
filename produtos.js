@@ -197,5 +197,122 @@ const produtos = [
     ]
   },
 
+  {
+    nome: "CARTELA DE ADESIVOS",
+    categoria: "",
+    preco: "4,00",
+    descricao: "",
+    imagens: [
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (1).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (2).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (3).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (4).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (5).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (6).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (7).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (8).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (9).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (10).jpeg",
+    ]
+  },
+
+  {
+    nome: "PAPELARIA PERSONALIZADA",
+    categoria: "",
+    preco: "",
+    descricao: "",
+    imagens: [
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (1).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (2).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (3).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (4).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (5).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (6).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (7).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (8).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (9).jpeg",
+      "images/PAPELARIA PERSONALIZADA/PAPELARIA PERSONALIZADA (10).jpeg",
+    ]
+  },
+
+  {
+    nome: "TOPPERS DE DOCINHOS",
+    categoria: "",
+    preco: "",
+    descricao: "",
+    imagens: [
+      "images/TOPPERS DE DOCINHOS/TOPPERS DE DOCINHOS (1).jpeg",
+      "images/TOPPERS DE DOCINHOS/TOPPERS DE DOCINHOS (2).jpeg",
+      "images/TOPPERS DE DOCINHOS/TOPPERS DE DOCINHOS (3).jpeg",
+      "images/TOPPERS DE DOCINHOS/TOPPERS DE DOCINHOS (4).jpeg",
+    ]
+  },
+
+  {
+    nome: "CENTRO DE BALÕES",
+    categoria: "",
+    preco: "",
+    descricao: "",
+    imagens: [
+      "images/CENTRO DE BALÕES/CENTRO DE BALÕES (1).jpeg",
+    ]
+  },
+
+  {
+    nome: "PLASTIFICAÇÃO",
+    categoria: "",
+    preco: "5,00",
+    descricao: "",
+    imagens: [
+      "images/PLASTIFICAÇÃO/PLASTIFICAÇÃO (1).jpeg",
+    ]
+  },
+
+  {
+    nome: "CARTÃO DE VISITA",
+    categoria: "",
+    preco: "",
+    descricao: "",
+    imagens: [
+      "images/CARTÃO DE VISITA/CARTÃO DE VISITA (1).jpeg",
+      "images/CARTÃO DE VISITA/CARTÃO DE VISITA (2).jpeg",
+      "images/CARTÃO DE VISITA/CARTÃO DE VISITA (3).jpeg",
+    ]
+  },
+
+  {
+    nome: "",
+    categoria: "",
+    preco: "",
+    descricao: "",
+    imagens: [
+      "images/XEROX E IMPRESSÃO.jpeg",
+    ]
+  },
+
+  {
+    nome: "BALÕES DE NÚMERO",
+    categoria: "",
+    preco: "8,00",
+    descricao: "",
+    imagens: [
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (1).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (2).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (3).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (4).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (5).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (6).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (7).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (8).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (9).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (10).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (11).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (12).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (13).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (14).jpeg",
+      "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (15).jpeg",
+    ]
+  },
+
 
 ];

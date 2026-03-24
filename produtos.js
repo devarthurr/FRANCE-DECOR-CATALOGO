@@ -254,7 +254,7 @@ const produtos = [
     preco: "",
     descricao: "",
     imagens: [
-      "images/CENTRO DE BALÕES/CENTRO DE BALÕES (1).jpeg",
+      "images/CENTRO DE BALÕES/CENTRO DE BALÕES.jpeg",
     ]
   },
 
@@ -264,7 +264,7 @@ const produtos = [
     preco: "5,00",
     descricao: "",
     imagens: [
-      "images/PLASTIFICAÇÃO/PLASTIFICAÇÃO (1).jpeg",
+      "images/PLASTIFICAÇÃO/PLASTIFICAÇÃO.jpeg",
     ]
   },
 

@@ -6,32 +6,35 @@ const produtos = [
     descricao: "",
     imagens: [
       "images/TOPOS DE BOLO/decoracao.jpeg",
-      "images/TOPOS DE BOLO/decoracao1.jpeg",
-      "images/TOPOS DE BOLO/decoracao2.jpeg",
-      "images/TOPOS DE BOLO/decoracao3.jpeg",
-      "images/TOPOS DE BOLO/decoracao4.jpeg",
-      "images/TOPOS DE BOLO/decoracao5.jpeg",
-      "images/TOPOS DE BOLO/decoracao6.jpeg",
-      "images/TOPOS DE BOLO/decoracao7.jpeg",
-      "images/TOPOS DE BOLO/decoracao8.jpeg",
-      "images/TOPOS DE BOLO/decoracao9.jpeg",
-      "images/TOPOS DE BOLO/decoracao10.jpeg",
-      "images/TOPOS DE BOLO/decoracao11.jpeg",
-      "images/TOPOS DE BOLO/decoracao12.jpeg",
-      "images/TOPOS DE BOLO/decoracao13.jpeg",
-      "images/TOPOS DE BOLO/decoracao14.jpeg",
-      "images/TOPOS DE BOLO/decoracao15.jpeg",
-      "images/TOPOS DE BOLO/decoracao16.jpeg",
-      "images/TOPOS DE BOLO/decoracao17.jpeg",
-      "images/TOPOS DE BOLO/decoracao18.jpeg",
-      "images/TOPOS DE BOLO/decoracao19.jpeg",
-      "images/TOPOS DE BOLO/decoracao20.jpeg",
-      "images/TOPOS DE BOLO/decoracao21.jpeg",
-      "images/TOPOS DE BOLO/decoracao22.jpeg",
-      "images/TOPOS DE BOLO/decoracao23.jpeg",
-      "images/TOPOS DE BOLO/decoracao24.jpeg",
-      "images/TOPOS DE BOLO/decoracao25.jpeg",
-      "images/TOPOS DE BOLO/decoracao26.jpeg",
+      "images/TOPOS DE BOLO/decoracao (1).jpeg",
+      "images/TOPOS DE BOLO/decoracao (2).jpeg",
+      "images/TOPOS DE BOLO/decoracao (3).jpeg",
+      "images/TOPOS DE BOLO/decoracao (4).jpeg",
+      "images/TOPOS DE BOLO/decoracao (5).jpeg",
+      "images/TOPOS DE BOLO/decoracao (6).jpeg",
+      "images/TOPOS DE BOLO/decoracao (7).jpeg",
+      "images/TOPOS DE BOLO/decoracao (8).jpeg",
+      "images/TOPOS DE BOLO/decoracao (9).jpeg",
+      "images/TOPOS DE BOLO/decoracao (10).jpeg",
+      "images/TOPOS DE BOLO/decoracao (11).jpeg",
+      "images/TOPOS DE BOLO/decoracao (12).jpeg",
+      "images/TOPOS DE BOLO/decoracao (13).jpeg",
+      "images/TOPOS DE BOLO/decoracao (14).jpeg",
+      "images/TOPOS DE BOLO/decoracao (15).jpeg",
+      "images/TOPOS DE BOLO/decoracao (16).jpeg",
+      "images/TOPOS DE BOLO/decoracao (17).jpeg",
+      "images/TOPOS DE BOLO/decoracao (18).jpeg",
+      "images/TOPOS DE BOLO/decoracao (19).jpeg",
+      "images/TOPOS DE BOLO/decoracao (20).jpeg",
+      "images/TOPOS DE BOLO/decoracao (21).jpeg",
+      "images/TOPOS DE BOLO/decoracao (22).jpeg",
+      "images/TOPOS DE BOLO/decoracao (23).jpeg",
+      "images/TOPOS DE BOLO/decoracao (24).jpeg",
+      "images/TOPOS DE BOLO/decoracao (25).jpeg",
+      "images/TOPOS DE BOLO/decoracao (26).jpeg",
+      "images/TOPOS DE BOLO/decoracao (27).jpeg",
+      "images/TOPOS DE BOLO/decoracao (28).jpeg",
+      "images/TOPOS DE BOLO/decoracao (29).jpeg",
     ]
   },
 
@@ -62,7 +65,9 @@ const produtos = [
       "images/DECORAÇÕES/topo de bolo (19).jpeg",
       "images/DECORAÇÕES/topo de bolo (20).jpeg",
       "images/DECORAÇÕES/topo de bolo (21).jpeg",
-      "images/DECORAÇÕES/topo de bolo (2).jpeg",
+      "images/DECORAÇÕES/topo de bolo (22).jpeg",
+      "images/DECORAÇÕES/topo de bolo (23).jpeg",
+      "images/DECORAÇÕES/topo de bolo (24).jpeg",
     ]
   },
 
@@ -94,6 +99,7 @@ const produtos = [
       "images/FESTA NA MESA/FESTA NA MESA (3).jpeg",
       "images/FESTA NA MESA/FESTA NA MESA (4).jpeg",
       "images/FESTA NA MESA/FESTA NA MESA (5).jpeg",
+      "images/FESTA NA MESA/FESTA NA MESA (6).jpeg",
     ]
   },
 
@@ -129,6 +135,8 @@ const produtos = [
       "images/LEMBRANCINHAS PERSONALIZADAS/LEMBRANCINHAS PERSONALIZADAS (24).jpeg",
       "images/LEMBRANCINHAS PERSONALIZADAS/LEMBRANCINHAS PERSONALIZADAS (25).jpeg",
       "images/LEMBRANCINHAS PERSONALIZADAS/LEMBRANCINHAS PERSONALIZADAS (26).jpeg",
+      "images/LEMBRANCINHAS PERSONALIZADAS/LEMBRANCINHAS PERSONALIZADAS (27).jpeg",
+      "images/LEMBRANCINHAS PERSONALIZADAS/LEMBRANCINHAS PERSONALIZADAS (28).jpeg",
 
     ]
   },
@@ -150,6 +158,7 @@ const produtos = [
       "images/PAINEL DE PAPEL/PAINEL DE PAPEL (9).jpeg",
       "images/PAINEL DE PAPEL/PAINEL DE PAPEL (10).jpeg",
       "images/PAINEL DE PAPEL/PAINEL DE PAPEL (11).jpeg",
+      "images/PAINEL DE PAPEL/PAINEL DE PAPEL (12).jpeg",
 
     ]
   },
@@ -213,6 +222,7 @@ const produtos = [
       "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (8).jpeg",
       "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (9).jpeg",
       "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (10).jpeg",
+      "images/CARTELA DE ADESIVOS/CARTELA DE ADESIVOS (11).jpeg",
     ]
   },
 
@@ -255,6 +265,8 @@ const produtos = [
     descricao: "",
     imagens: [
       "images/CENTRO DE BALÕES/CENTRO DE BALÕES.jpeg",
+      "images/CENTRO DE BALÕES/CENTRO DE BALÕES 2.jpeg",
+      "images/CENTRO DE BALÕES/CENTRO DE BALÕES 3.jpeg",
     ]
   },
 
@@ -311,6 +323,17 @@ const produtos = [
       "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (13).jpeg",
       "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (14).jpeg",
       "images/BALÕES DE NÚMERO/BALÕES DE NÚMERO (15).jpeg",
+    ]
+  },
+
+  {
+    nome: "BOLO FAKE",
+    categoria: "",
+    preco: "",
+    descricao: "",
+    imagens: [
+      "images/BOLO FAKE/BOLO FAKE.jpeg",
+
     ]
   },
 

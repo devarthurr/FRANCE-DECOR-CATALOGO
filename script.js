@@ -41,7 +41,7 @@ function abrirProduto(produto) {
         : `
         <a href="https://wa.me/5583989066731" target="_blank" class="botao-whatsapp">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-          Consultar valor
+          "CLIQUE AQUI" para consultar o valor.
         </a>`
       }
 

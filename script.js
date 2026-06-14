@@ -27,15 +27,63 @@ const scrollObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
+// ==========================================
+// LÓGICA DO ARRASTE (DRAG TO SCROLL)
+// ==========================================
+let isDown = false;
+let startX;
+let scrollLeft;
+
+categoriasContainer.addEventListener('mousedown', (e) => {
+    isDown = true;
+    categoriasContainer.classList.add('active'); // Ativa cursor grabbing e bloqueia clique
+    startX = e.pageX - categoriasContainer.offsetLeft;
+    scrollLeft = categoriasContainer.scrollLeft;
+});
+
+categoriasContainer.addEventListener('mouseleave', () => {
+    isDown = false;
+    categoriasContainer.classList.remove('active');
+});
+
+categoriasContainer.addEventListener('mouseup', () => {
+    isDown = false;
+    categoriasContainer.classList.remove('active');
+});
+
+categoriasContainer.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - categoriasContainer.offsetLeft;
+    const walk = (x - startX) * 2; // O "2" é a velocidade de rolagem (aumente para rolar mais rápido)
+    categoriasContainer.scrollLeft = scrollLeft - walk;
+});
+
+
 // Carrega categorias e produtos do Firebase
 async function carregarDados() {
-    // 1. CARREGAR AS CATEGORIAS (Filtro Horizontal)
+    // 1. CARREGAR AS CATEGORIAS 
     const catSnap = await getDocs(collection(db, "categorias"));
-    categoriasContainer.innerHTML = `<button class="categoriaAtiva" onclick="filtrarCategoria('Todos', this)">Todos</button>`;
+    categoriasContainer.innerHTML = "";
+    
+    let primeiraCategoria = null;
+    let primeiroBotao = null;
     
     catSnap.forEach(doc => {
         const catNome = doc.data().nome;
-        categoriasContainer.innerHTML += `<button onclick="filtrarCategoria('${catNome}', this)">${catNome}</button>`;
+        
+        // Cria o botão da categoria dinamicamente
+        const btn = document.createElement("button");
+        btn.innerText = catNome;
+        btn.onclick = function() { filtrarCategoria(catNome, this); };
+        
+        categoriasContainer.appendChild(btn);
+
+        // Guarda a primeira categoria para ativar ao abrir o site
+        if (!primeiraCategoria) {
+            primeiraCategoria = catNome;
+            primeiroBotao = btn;
+        }
     });
 
     // 2. CARREGAR PRODUTOS
@@ -45,16 +93,19 @@ async function carregarDados() {
         todosProdutos.push({ id: doc.id, ...doc.data() });
     });
 
-    // Inicia mostrando 'Todos'
-    renderizarVitrine('Todos');
+    // Inicia mostrando a primeira categoria carregada do banco
+    if (primeiraCategoria && primeiroBotao) {
+        filtrarCategoria(primeiraCategoria, primeiroBotao);
+    } else {
+        conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhuma categoria ou produto cadastrado.</p>`;
+    }
 }
 
-// Filtro e estilo do botão
 window.filtrarCategoria = (categoria, btnElement) => {
     document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("categoriaAtiva"));
     btnElement.classList.add("categoriaAtiva");
     
-    // Rola o menu horizontal levemente para o botão clicado
+    // Rola de forma suave para garantir que o botão inteiro fique visível
     btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     
     renderizarVitrine(categoria);
@@ -63,10 +114,8 @@ window.filtrarCategoria = (categoria, btnElement) => {
 function renderizarVitrine(categoria) {
     conteudo.innerHTML = "";
     
-    let filtrados = todosProdutos;
-    if (categoria !== 'Todos') {
-        filtrados = todosProdutos.filter(p => p.categoria === categoria);
-    }
+    // Como a aba 'Todos' já não existe, filtramos sempre pela categoria selecionada
+    let filtrados = todosProdutos.filter(p => p.categoria === categoria);
 
     if (filtrados.length === 0) {
         conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhum produto encontrado nesta categoria.</p>`;
@@ -77,19 +126,11 @@ function renderizarVitrine(categoria) {
         const div = document.createElement("div");
         div.className = "produto";
         
-        // ==========================================
-        // LÓGICA CONDICIONAL DE EXIBIR O NOME
-        // ==========================================
-        const possuiNomeCadastrado = p.nome && p.nome.trim() !== "";
-        // O nome só será renderizado na tela se a categoria for "Todos" E o produto tiver nome.
-        const exibirNome = (categoria === 'Todos') && possuiNomeCadastrado;
-        
-        // Se exibirNome for falso, o card vira apenas imagem inteira
+        // Sem a aba "Todos", os cards são sempre 100% preenchidos pela imagem (estilo álbum)
         div.innerHTML = `
-            <div class="produto-img-container" style="${exibirNome ? '' : 'height: 100%; border-bottom: none;'}">
+            <div class="produto-img-container" style="height: 100%; border-bottom: none;">
                 <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
             </div>
-            ${exibirNome ? `<div class="produto-info"><h3>${p.nome}</h3></div>` : ''}
         `;
         
         div.onclick = () => abrirProduto(p);
@@ -113,7 +154,7 @@ async function abrirProduto(produto) {
         precoElement.innerText = "Valor sob consulta";
     }
 
-    const telefoneZap = "SEU_NUMERO_AQUI"; // Coloque seu número aqui
+    const telefoneZap = "SEU_NUMERO_AQUI"; // Coloque o seu número de WhatsApp aqui!
     const nomeDoProduto = produto.nome ? produto.nome : "esse produto que vi no catálogo";
     const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre ${nomeDoProduto}`);
     

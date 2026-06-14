@@ -1,15 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // =====================================================================
-// COLE SUA CHAVE AQUI
+// COLOQUE SUA CHAVE DO FIREBASE AQUI
 const firebaseConfig = {
-  apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
-  authDomain: "francedecor-ec604.firebaseapp.com",
-  projectId: "francedecor-ec604",
-  storageBucket: "francedecor-ec604.firebasestorage.app",
-  messagingSenderId: "1063148304350",
-  appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_PROJETO.firebaseapp.com",
+    projectId: "SEU_PROJETO",
+    storageBucket: "SEU_PROJETO.appspot.com",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID"
 };
 // =====================================================================
 
@@ -18,7 +18,7 @@ const db = getFirestore(app);
 
 const conteudo = document.getElementById("conteudo");
 const pesquisa = document.getElementById("pesquisa");
-const categoriasDiv = document.getElementById("categorias");
+const categoriesDiv = document.getElementById("categorias");
 
 let produtos = []; 
 let categoriaAtual = "Todos";
@@ -37,7 +37,7 @@ async function carregarCatalogoFirebase() {
                 categoria: dados.categoria || "Geral", 
                 preco: dados.preco ? dados.preco.toFixed(2).replace('.', ',') : "",
                 descricao: dados.descricao || "Descrição não disponível.",
-                imagens: dados.imagens && dados.imagens.length > 0 ? dados.imagens : ["images/logo.png"]
+                imagemCapa: dados.imagemCapa || "images/logo.png"
             });
         });
 
@@ -47,13 +47,13 @@ async function carregarCatalogoFirebase() {
 
     } catch (error) {
         console.error("Erro ao carregar do Firebase:", error);
-        conteudo.innerHTML = `<p style="text-align:center; width:100%;">Erro ao carregar os produtos. Verifique sua conexão.</p>`;
+        conteudo.innerHTML = `<p style="text-align:center; width:100%;">Erro ao carregar o catálogo.</p>`;
     }
 }
 
 function criarCategorias() {
     const categorias = ["Todos", ...new Set(produtos.map(produto => produto.categoria))];
-    categoriasDiv.innerHTML = "";
+    categoriesDiv.innerHTML = "";
 
     categorias.forEach(categoria => {
         const botao = document.createElement("button");
@@ -65,7 +65,7 @@ function criarCategorias() {
             categoriaAtual = categoria;
             filtrarProdutos();
         };
-        categoriasDiv.appendChild(botao);
+        categoriesDiv.appendChild(botao);
     });
 }
 
@@ -86,7 +86,7 @@ function renderizarCatalogo() {
         const card = document.createElement("div");
         card.className = "produto mostrar"; 
         card.innerHTML = `
-            <img src="${produto.imagens[0]}" alt="${produto.nome}">
+            <img src="${produto.imagemCapa}" alt="${produto.nome}">
             <div class="produto-info">
                 <h3>${produto.nome}</h3>
                 <p>${produto.categoria}</p>
@@ -98,7 +98,7 @@ function renderizarCatalogo() {
     });
 }
 
-function abrirProduto(produto) {
+async function abrirProduto(produto) {
     const modal = document.getElementById("modal");
     modal.style.display = "flex";
 
@@ -107,22 +107,47 @@ function abrirProduto(produto) {
     document.getElementById("produtoPreco").innerText = produto.preco ? "R$ " + produto.preco : "Consulte o valor";
 
     const imagemPrincipal = document.getElementById("imagemPrincipal");
-    imagemPrincipal.src = produto.imagens[0]; 
+    imagemPrincipal.src = produto.imagemCapa;
 
     const miniaturas = document.getElementById("miniaturas");
-    miniaturas.innerHTML = "";
-    
-    produto.imagens.forEach(imagem => {
-        const img = document.createElement("img");
-        img.src = imagem;
-        img.onclick = () => {
-            imagemPrincipal.src = imagem;
-        };
-        miniaturas.appendChild(img);
-    });
+    miniaturas.innerHTML = "<p style='font-size:12px; opacity:0.5;'>Carregando galeria...</p>";
 
     const mensagem = `Olá! Tenho interesse no produto: ${produto.nome}`;
     document.getElementById("botaoWhatsapp").href = `https://wa.me/5583993167766?text=${encodeURIComponent(mensagem)}`;
+
+    try {
+        const q = query(collection(db, "imagens_produtos"), where("produtoId", "==", produto.id));
+        const querySnapshot = await getDocs(q);
+        
+        let imagensArray = [];
+        querySnapshot.forEach((doc) => {
+            imagensArray.push(doc.data());
+        });
+
+        // CORREÇÃO DO ERRO: Ordena no lado do cliente para evitar erro de índice composto no Firebase
+        imagensArray.sort((a, b) => a.ordem - b.ordem);
+
+        miniaturas.innerHTML = "";
+
+        // Adiciona a primeira imagem como miniatura inicial
+        const imgCapa = document.createElement("img");
+        imgCapa.src = produto.imagemCapa;
+        imgCapa.onclick = () => { imagemPrincipal.src = produto.imagemCapa; };
+        miniaturas.appendChild(imgCapa);
+
+        imagensArray.forEach((imgData) => {
+            const img = document.createElement("img");
+            img.src = imgData.stringImagem;
+            img.onclick = () => {
+                imagemPrincipal.src = imgData.stringImagem;
+            };
+            miniaturas.appendChild(img);
+        });
+
+    } catch (err) {
+        console.error("Erro ao carregar galeria:", err);
+        miniaturas.innerHTML = "";
+    }
 }
 
 document.getElementById("fecharModal").onclick = () => {

@@ -3,14 +3,14 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // =====================================================================
-// COLE SUA CHAVE AQUI
+// COLOQUE SUA CHAVE DO FIREBASE AQUI
 const firebaseConfig = {
-  apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
-  authDomain: "francedecor-ec604.firebaseapp.com",
-  projectId: "francedecor-ec604",
-  storageBucket: "francedecor-ec604.firebasestorage.app",
-  messagingSenderId: "1063148304350",
-  appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_PROJETO.firebaseapp.com",
+    projectId: "SEU_PROJETO",
+    storageBucket: "SEU_PROJETO.appspot.com",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID"
 };
 // =====================================================================
 
@@ -27,8 +27,8 @@ const productForm = document.getElementById('product-form');
 const categorySelect = document.getElementById('product-category');
 const btnSalvarProduto = document.getElementById('btn-salvar-produto');
 
-// Conversor de Imagem para Base64 (Armazenamento Gratuito via Texto)
-const converterParaBase64 = (file, maxWidth = 900, maxHeight = 900, quality = 0.6) => {
+// Conversor e compressor calibrado para aceitar até 50 imagens sem travar o processamento
+const converterParaBase64 = (file, maxWidth = 800, maxHeight = 800, quality = 0.5) => {
     return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -76,11 +76,9 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('admin-email').value.trim();
     const password = document.getElementById('admin-password').value;
     
-    signInWithEmailAndPassword(auth, email, password)
-        .catch((error) => {
-            console.error("Erro completo:", error);
-            alert('Erro do Firebase: ' + error.code + '\n(Verifique se o e-mail/senha estão corretos ou se o provedor está ativado no painel)');
-        });
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        alert('Erro do Firebase: ' + error.code + '\nVerifique as credenciais na aba Authentication.');
+    });
 });
 
 logoutBtn.addEventListener('click', () => signOut(auth));
@@ -118,29 +116,41 @@ productForm.addEventListener('submit', async (e) => {
     const category = document.getElementById('product-category').value;
     const imageFiles = document.getElementById('product-image').files;
 
-    if (imageFiles.length === 0) return alert('Selecione pelo menos uma imagem.');
+    if (imageFiles.length === 0) return alert('Selecione ao menos uma imagem.');
+    if (imageFiles.length > 50) return alert('O limite máximo permitido é de 50 imagens por produto.');
 
-    btnSalvarProduto.innerText = "Processando e salvando... Aguarde";
+    btnSalvarProduto.innerText = `Processando ${imageFiles.length} imagens...`;
     btnSalvarProduto.disabled = true;
 
     try {
-        const base64Images = [];
+        // 1. Processa e salva a primeira imagem como capa indexada
+        const capaBase64 = await converterParaBase64(imageFiles[0]);
 
-        for (let i = 0; i < imageFiles.length; i++) {
-            const base64String = await converterParaBase64(imageFiles[i]);
-            base64Images.push(base64String);
-        }
-
-        await addDoc(collection(db, "produtos"), {
+        // 2. Cria o registro base do produto
+        const produtoDoc = await addDoc(collection(db, "produtos"), {
             nome: name,
             descricao: desc,
             preco: price ? parseFloat(price) : null,
             categoria: category,
-            imagens: base64Images,
+            imagemCapa: capaBase64,
             dataCriacao: new Date()
         });
 
-        alert('Produto adicionado com sucesso!');
+        const produtoId = produtoDoc.id;
+
+        // 3. Salva todas as imagens da galeria de forma desvinculada (bypassa limite de tamanho por doc)
+        for (let i = 0; i < imageFiles.length; i++) {
+            btnSalvarProduto.innerText = `Salvando imagem ${i + 1} de ${imageFiles.length}...`;
+            const fotoBase64 = await converterParaBase64(imageFiles[i]);
+            
+            await addDoc(collection(db, "imagens_produtos"), {
+                produtoId: produtoId,
+                stringImagem: fotoBase64,
+                ordem: i
+            });
+        }
+
+        alert('Produto com galeria completa salvo com sucesso!');
         productForm.reset();
     } catch (e) {
         alert('Erro ao salvar no Firestore: ' + e.message);

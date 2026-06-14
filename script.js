@@ -15,8 +15,11 @@ const db = getFirestore(app);
 
 const conteudo = document.getElementById("conteudo");
 const categoriasContainer = document.getElementById("categorias");
+const campoPesquisa = document.getElementById("pesquisa");
 
 let todosProdutos = [];
+let categoriaAtual = null;
+let botaoAtivoAtual = null;
 
 const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -61,7 +64,6 @@ categoriasContainer.addEventListener('mousemove', (e) => {
 // CARREGAMENTO INTELIGENTE
 // ==========================================
 async function carregarDados() {
-    // 1. Verifica as Categorias
     const catSnap = await getDocs(collection(db, "categorias"));
     categoriasContainer.innerHTML = "";
     
@@ -85,7 +87,6 @@ async function carregarDados() {
         }
     });
 
-    // 2. Carrega Produtos
     const prodSnap = await getDocs(collection(db, "produtos"));
     todosProdutos = [];
     prodSnap.forEach(doc => {
@@ -94,12 +95,9 @@ async function carregarDados() {
 
     const wrapper = document.querySelector('.categorias-wrapper');
 
-    // 3. Define a Visualização Automática
     if (temCategorias) {
-        // Se escolheu usar categorias, mostra o painel de arrastar
         if (wrapper) wrapper.style.display = 'block';
         
-        // Verifica se existem produtos "órfãos" (sem categoria) e cria aba "Geral" para eles
         const temSemCategoria = todosProdutos.some(p => !p.categoria || p.categoria.trim() === "");
         if (temSemCategoria) {
             const btnOutros = document.createElement("button");
@@ -113,19 +111,23 @@ async function carregarDados() {
             }
         }
 
-        // Entra na primeira categoria automaticamente
         if (primeiraCategoria && primeiroBotao) {
             filtrarCategoria(primeiraCategoria, primeiroBotao);
         }
     } else {
-        // SE NÃO TIVER NENHUMA CATEGORIA CADASTRADA, ESCONDE A BARRA E RENDERIZA TUDO
         if (wrapper) wrapper.style.display = 'none';
         renderizarVitrineGeral();
     }
 }
 
-// Filtra produtos se tiver usando categorias (Nomes ocultados)
+// Filtra produtos se tiver usando categorias
 window.filtrarCategoria = (categoria, btnElement) => {
+    // Se o usuário clicar numa categoria, limpa a barra de pesquisa
+    campoPesquisa.value = "";
+    
+    categoriaAtual = categoria;
+    botaoAtivoAtual = btnElement;
+
     document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("categoriaAtiva"));
     btnElement.classList.add("categoriaAtiva");
     btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -134,7 +136,6 @@ window.filtrarCategoria = (categoria, btnElement) => {
     
     let filtrados = [];
     if (categoria === 'Geral') {
-        // Pega produtos sem categoria ou os que você digitou 'Geral'
         filtrados = todosProdutos.filter(p => !p.categoria || p.categoria.trim() === "" || p.categoria === 'Geral');
     } else {
         filtrados = todosProdutos.filter(p => p.categoria === categoria);
@@ -149,7 +150,7 @@ window.filtrarCategoria = (categoria, btnElement) => {
         const div = document.createElement("div");
         div.className = "produto";
         
-        // Sem nomes! O foco é total na imagem, estilo Lookbook.
+        // Esconde nomes dentro das categorias específicas (Lookbook)
         div.innerHTML = `
             <div class="produto-img-container" style="height: 100%; border-bottom: none;">
                 <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
@@ -162,7 +163,59 @@ window.filtrarCategoria = (categoria, btnElement) => {
     });
 };
 
-// Renderiza tudo caso não use categorias (Nomes visíveis)
+// ==========================================
+// LÓGICA DE PESQUISA EM TEMPO REAL
+// ==========================================
+campoPesquisa.addEventListener('input', (e) => {
+    const termo = e.target.value.toLowerCase().trim();
+    
+    // Se apagar tudo da pesquisa, volta para onde estava
+    if (termo === "") {
+        if (categoriaAtual && botaoAtivoAtual) {
+            filtrarCategoria(categoriaAtual, botaoAtivoAtual);
+        } else {
+            renderizarVitrineGeral();
+        }
+        return;
+    }
+
+    // Filtra produtos globalmente pelo nome ou descrição
+    const filtrados = todosProdutos.filter(p => {
+        const nomeStr = p.nome ? p.nome.toLowerCase() : "";
+        const descStr = p.descricao ? p.descricao.toLowerCase() : "";
+        return nomeStr.includes(termo) || descStr.includes(termo);
+    });
+
+    renderizarResultadoPesquisa(filtrados);
+});
+
+function renderizarResultadoPesquisa(filtrados) {
+    conteudo.innerHTML = "";
+    
+    if (filtrados.length === 0) {
+        conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhum produto encontrado para: "<b>${campoPesquisa.value}</b>"</p>`;
+        return;
+    }
+
+    // Na pesquisa global, sempre mostramos o nome do produto se houver, para o cliente saber o que encontrou
+    filtrados.forEach((p) => {
+        const div = document.createElement("div");
+        div.className = "produto";
+        
+        const possuiNomeCadastrado = p.nome && p.nome.trim() !== "";
+        div.innerHTML = `
+            <div class="produto-img-container" style="${possuiNomeCadastrado ? '' : 'height: 100%; border-bottom: none;'}">
+                <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
+            </div>
+            ${possuiNomeCadastrado ? `<div class="produto-info"><h3>${p.nome}</h3></div>` : ''}
+        `;
+        
+        div.onclick = () => abrirProduto(p);
+        conteudo.appendChild(div);
+        scrollObserver.observe(div);
+    });
+}
+
 function renderizarVitrineGeral() {
     conteudo.innerHTML = "";
     
@@ -176,7 +229,6 @@ function renderizarVitrineGeral() {
         div.className = "produto";
         
         const possuiNomeCadastrado = p.nome && p.nome.trim() !== "";
-        // Se o produto tiver nome cadastrado, mostra ele no card!
         div.innerHTML = `
             <div class="produto-img-container" style="${possuiNomeCadastrado ? '' : 'height: 100%; border-bottom: none;'}">
                 <img src="${p.imagemCapa}" loading="lazy" alt="Produto">

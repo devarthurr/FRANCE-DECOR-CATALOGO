@@ -2,38 +2,28 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
-  authDomain: "francedecor-ec604.firebaseapp.com",
-  projectId: "francedecor-ec604",
-  storageBucket: "francedecor-ec604.firebasestorage.app",
-  messagingSenderId: "1063148304350",
-  appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
+    apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
+    authDomain: "francedecor-ec604.firebaseapp.com",
+    projectId: "francedecor-ec604",
+    storageBucket: "francedecor-ec604.firebasestorage.app",
+    messagingSenderId: "1063148304350",
+    appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const conteudo = document.getElementById("conteudo");
-const pesquisa = document.getElementById("pesquisa");
-
-let produtos = [];
 
 async function carregarCatalogo() {
-    const querySnapshot = await getDocs(collection(db, "produtos"));
-    produtos = [];
-    querySnapshot.forEach((doc) => {
-        produtos.push({ id: doc.id, ...doc.data() });
-    });
-    renderizar(produtos);
-}
-
-function renderizar(lista) {
+    const snapshot = await getDocs(collection(db, "produtos"));
     conteudo.innerHTML = "";
-    lista.forEach(p => {
+    snapshot.forEach((doc) => {
+        const p = doc.data();
         const div = document.createElement("div");
         div.className = "produto";
-        div.innerHTML = `<img src="${p.imagemCapa}" alt="${p.nome}"><div class="produto-info"><h3>${p.nome}</h3><div class="preco">R$ ${p.preco}</div></div>`;
-        div.onclick = () => abrirProduto(p);
+        div.innerHTML = `<img src="${p.imagemCapa}"><div class="produto-info"><h3>${p.nome}</h3><div class="preco">R$ ${p.preco}</div></div>`;
+        div.onclick = () => abrirProduto({id: doc.id, ...p});
         conteudo.appendChild(div);
     });
 }
@@ -41,7 +31,6 @@ function renderizar(lista) {
 async function abrirProduto(produto) {
     const modal = document.getElementById("modal");
     modal.style.display = "flex";
-    
     document.getElementById("produtoNome").innerText = produto.nome;
     document.getElementById("produtoDescricao").innerText = produto.descricao;
     document.getElementById("produtoPreco").innerText = "R$ " + produto.preco;
@@ -49,20 +38,18 @@ async function abrirProduto(produto) {
     const imgPrincipal = document.getElementById("imagemPrincipal");
     imgPrincipal.src = produto.imagemCapa;
 
-    // Buscar Galeria
     const q = query(collection(db, "imagens_produtos"), where("produtoId", "==", produto.id));
-    const snapshot = await getDocs(q);
+    const snap = await getDocs(q);
     let galeria = [produto.imagemCapa];
-    snapshot.forEach(doc => galeria.push(doc.data().stringImagem));
+    snap.forEach(d => galeria.push(d.data().stringImagem));
 
-    // Lógica das Setas
     let index = 0;
-    const containerEsq = document.querySelector(".modal-esquerda");
+    const container = document.querySelector(".modal-esquerda");
     document.querySelectorAll(".seta").forEach(s => s.remove());
 
     const btnEsq = document.createElement("button"); btnEsq.innerHTML = "&#10094;"; btnEsq.className = "seta"; btnEsq.id = "setaEsquerda";
     const btnDir = document.createElement("button"); btnDir.innerHTML = "&#10095;"; btnDir.className = "seta"; btnDir.id = "setaDireita";
-    containerEsq.appendChild(btnEsq); containerEsq.appendChild(btnDir);
+    container.appendChild(btnEsq); container.appendChild(btnDir);
 
     btnDir.onclick = () => { index = (index + 1) % galeria.length; imgPrincipal.src = galeria[index]; };
     btnEsq.onclick = () => { index = (index - 1 + galeria.length) % galeria.length; imgPrincipal.src = galeria[index]; };

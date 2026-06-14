@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // =====================================================================
-// COLE A CHAVE DO SEU FIREBASE AQUI:
+// COLE SUA CHAVE AQUI
 const firebaseConfig = {
   apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
   authDomain: "francedecor-ec604.firebaseapp.com",
@@ -47,7 +47,7 @@ async function carregarCatalogoFirebase() {
 
     } catch (error) {
         console.error("Erro ao carregar do Firebase:", error);
-        conteudo.innerHTML = `<p style="text-align:center; width:100%;">Erro ao carregar os produtos. Verifique sua conexão ou configuração.</p>`;
+        conteudo.innerHTML = `<p style="text-align:center; width:100%;">Erro ao carregar os produtos. Verifique sua conexão.</p>`;
     }
 }
 

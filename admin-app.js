@@ -3,14 +3,14 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // =====================================================================
-// COLE A CHAVE DO SEU FIREBASE AQUI:
+// COLE SUA CHAVE AQUI
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_PROJETO.firebaseapp.com",
-    projectId: "SEU_PROJETO",
-    storageBucket: "SEU_PROJETO.appspot.com",
-    messagingSenderId: "SEU_SENDER_ID",
-    appId: "SEU_APP_ID"
+  apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
+  authDomain: "francedecor-ec604.firebaseapp.com",
+  projectId: "francedecor-ec604",
+  storageBucket: "francedecor-ec604.firebasestorage.app",
+  messagingSenderId: "1063148304350",
+  appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
 };
 // =====================================================================
 
@@ -27,9 +27,7 @@ const productForm = document.getElementById('product-form');
 const categorySelect = document.getElementById('product-category');
 const btnSalvarProduto = document.getElementById('btn-salvar-produto');
 
-// =====================================================================
-// FUNÇÃO QUE CONVERTE E COMPRIME A IMAGEM EM TEXTO (BASE64) PARA O BANCO
-// =====================================================================
+// Conversor de Imagem para Base64 (Armazenamento Gratuito via Texto)
 const converterParaBase64 = (file, maxWidth = 900, maxHeight = 900, quality = 0.6) => {
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -55,7 +53,6 @@ const converterParaBase64 = (file, maxWidth = 900, maxHeight = 900, quality = 0.
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Gera o texto Base64 leve e otimizado para o Firestore
                 const base64String = canvas.toDataURL('image/jpeg', quality);
                 resolve(base64String);
             };
@@ -76,10 +73,14 @@ onAuthStateChanged(auth, (user) => {
 
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('admin-email').value;
+    const email = document.getElementById('admin-email').value.trim();
     const password = document.getElementById('admin-password').value;
+    
     signInWithEmailAndPassword(auth, email, password)
-        .catch(() => alert('Erro de acesso: Usuário ou senha incorretos.'));
+        .catch((error) => {
+            console.error("Erro completo:", error);
+            alert('Erro do Firebase: ' + error.code + '\n(Verifique se o e-mail/senha estão corretos ou se o provedor está ativado no painel)');
+        });
 });
 
 logoutBtn.addEventListener('click', () => signOut(auth));
@@ -108,7 +109,6 @@ async function loadCategories() {
     });
 }
 
-// SALVAR DIRETO NO BANCO DE DADOS (FIRESTORE)
 productForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -120,25 +120,23 @@ productForm.addEventListener('submit', async (e) => {
 
     if (imageFiles.length === 0) return alert('Selecione pelo menos uma imagem.');
 
-    btnSalvarProduto.innerText = "Processando e salvando no banco... Aguarde";
+    btnSalvarProduto.innerText = "Processando e salvando... Aguarde";
     btnSalvarProduto.disabled = true;
 
     try {
         const base64Images = [];
 
-        // Transforma todas as imagens em texto de forma ultra veloz
         for (let i = 0; i < imageFiles.length; i++) {
             const base64String = await converterParaBase64(imageFiles[i]);
             base64Images.push(base64String);
         }
 
-        // Envia tudo diretamente para o Cloud Firestore em uma única operação
         await addDoc(collection(db, "produtos"), {
             nome: name,
             descricao: desc,
             preco: price ? parseFloat(price) : null,
             categoria: category,
-            imagens: base64Images, // As imagens agora são salvas aqui dentro como texto
+            imagens: base64Images,
             dataCriacao: new Date()
         });
 

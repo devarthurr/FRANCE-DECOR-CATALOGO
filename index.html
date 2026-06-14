@@ -1,44 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FRANCE DECOR</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRANCE DECOR</title>
+    <meta name="description" content="Catálogo Oficial France Decor">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <header class="header">
+        <div class="header-left">
+            <img src="images/logo.png" class="logo-img" alt="France Decor">
+            <div class="empresa">
+                <h1>FRANCE DECOR</h1>
+                <p>Papelaria Personalizada • Festas • Decoração</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="https://instagram.com/_france.decor" target="_blank" class="instagram-link">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                Instagram
+            </a>
+        </div>
+    </header>
 
-<header class="header">
+    <section class="banner">
+        <div class="banner-texto">
+            <h2>Transformando momentos em lembranças especiais</h2>
+            <p>Topos de bolo, papelaria personalizada, lembrancinhas, painéis, balões e muito mais.</p>
+        </div>
+    </section>
 
-  <div class="header-left">
-    <img src="images/logo.png" class="logo-img">
-  </div>
+    <section class="pesquisa">
+        <input type="text" id="pesquisa" placeholder="Pesquisar produtos...">
+    </section>
 
-  <div class="header-center">
-    FRANCE DECOR
-  </div>
+    <section id="categorias"></section>
 
-  <div class="header-right">
-    <a href="https://instagram.com/_france.decor" target="_blank" class="instagram-link">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-      Instagram
-    </a>
-  </div>
+    <main id="conteudo"></main>
 
-</header>
+    <div id="modal" class="modal">
+        <div class="modal-container">
+            <span id="fecharModal">×</span>
+            <div class="modal-esquerda">
+                <img id="imagemPrincipal" alt="Produto">
+                <div id="miniaturas"></div>
+            </div>
+            <div class="modal-direita">
+                <h2 id="produtoNome"></h2>
+                <p id="produtoDescricao"></p>
+                <h3 id="produtoPreco"></h3>
+                <a id="botaoWhatsapp" class="botao-whatsapp" target="_blank">Consultar no WhatsApp</a>
+            </div>
+        </div>
+    </div>
 
-<main id="conteudo"></main>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
 
-<footer>
-  © 2026 FRANCE DECOR - Todos os direitos reservados
-</footer>
+    <button id="voltarTopo">↑</button>
 
-<script src="produtos.js"></script>
-<script src="script.js"></script>
+    <footer>
+        <h3>FRANCE DECOR</h3>
+        <p>Personalizados • Papelaria • Festas</p>
+        <span>© 2026 Todos os direitos reservados</span>
+    </footer>
 
+    <script type="module" src="script.js"></script>
 </body>
 </html>

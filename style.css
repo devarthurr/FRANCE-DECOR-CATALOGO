@@ -1,212 +1,372 @@
-* {
-  box-sizing: border-box;
+/* ==========================
+   RESET
+========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+html{
+    scroll-behavior:smooth;
+}
+body{
+    font-family:'Montserrat',sans-serif;
+    background:linear-gradient(135deg,#081521,#153d66);
+    color:white;
+    min-height:100vh;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Montserrat', sans-serif;
-  color: white;
-  background: linear-gradient(135deg, #081521, #132f4c); /* FUNDO ANTIGO */
+/* ==========================
+HEADER
+========================== */
+.header{
+    width:100%;
+    background:#174db7;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    position:sticky;
+    top:0;
+    z-index:999;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+.logo-img{
+    width:90px;
+    height:90px;
+    border-radius:18px;
+    object-fit:cover;
+}
+.empresa h1{
+    font-size:38px;
+    letter-spacing:2px;
+}
+.empresa p{
+    opacity:.8;
+    margin-top:5px;
+    font-size:14px;
+}
+.instagram-link{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+    transition:.3s;
+}
+.instagram-link img{
+    width:30px;
+}
+.instagram-link:hover{
+    transform:translateY(-3px);
 }
 
-/* ================= HEADER (PARTE DE CIMA) ================= */
-
-.header {
-  background: #174db7; /* azul da logo */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 35px;
-  border-bottom: 4px solid white; /* LINHA BRANCA */
+/* ==========================
+BANNER
+========================== */
+.banner{
+    width:100%;
+    padding:80px 20px;
+    text-align:center;
+}
+.banner h2{
+    font-size:48px;
+    margin-bottom:20px;
+}
+.banner p{
+    max-width:700px;
+    margin:auto;
+    font-size:20px;
+    opacity:.85;
 }
 
-.logo-img {
-  height: 90px;
-  width: 90px;
-  object-fit: contain;
-  border-radius: 20px;
+/* ==========================
+PESQUISA
+========================== */
+.pesquisa{
+    display:flex;
+    justify-content:center;
+    padding:30px;
+}
+.pesquisa input{
+    width:700px;
+    max-width:90%;
+    padding:18px 25px;
+    border:none;
+    border-radius:40px;
+    outline:none;
+    font-size:18px;
 }
 
-.header-center {
-  font-size: 38px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  padding-left: 4px;
+/* ==========================
+CATEGORIAS
+========================== */
+#categorias{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    padding:20px;
+}
+#categorias button{
+    padding:12px 22px;
+    border:none;
+    border-radius:40px;
+    cursor:pointer;
+    background:white;
+    color:#174db7;
+    font-weight:700;
+    transition:.3s;
+}
+#categorias button:hover{
+    transform:translateY(-4px);
+}
+.categoriaAtiva{
+    background:#174db7 !important;
+    color:white !important;
 }
 
-.instagram-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
+/* ==========================
+CATÁLOGO
+========================== */
+#conteudo{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
+    padding:50px;
 }
 
-.instagram-link img {
-  width: 28px;
+/* ==========================
+CARD
+========================== */
+.produto{
+    background:#102844;
+    border-radius:22px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.35s;
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+}
+.produto:hover{
+    transform:translateY(-10px);
+}
+.produto img{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+}
+.produto-info{
+    padding:20px;
+}
+.produto-info h3{
+    margin-bottom:10px;
+    font-size:22px;
+}
+.produto-info p{
+    opacity:.8;
+}
+.preco{
+    margin-top:15px;
+    color:#62ff91;
+    font-size:24px;
+    font-weight:bold;
 }
 
-/* ================= PARTE DE BAIXO ================= */
-
-main {
-  padding-top: 40px;
+/* ==========================
+MODAL
+========================== */
+.modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.88);
+    z-index:9999;
+}
+.modal-container{
+    width:92%;
+    max-width:1100px;
+    background:#102844;
+    border-radius:25px;
+    display:flex;
+    gap:30px;
+    padding:30px;
+    position:relative;
+}
+#fecharModal{
+    position:absolute;
+    right:25px;
+    top:15px;
+    font-size:42px;
+    cursor:pointer;
+}
+.modal-esquerda{
+    flex:1;
+}
+#imagemPrincipal{
+    width:100%;
+    height:450px;
+    object-fit:contain;
+    border-radius:18px;
+    background:#081521;
+}
+#miniaturas{
+    display:flex;
+    gap:10px;
+    overflow:auto;
+    margin-top:15px;
+}
+#miniaturas img{
+    width:75px;
+    height:75px;
+    border-radius:12px;
+    object-fit:cover;
+    cursor:pointer;
+    transition:.3s;
+}
+#miniaturas img:hover{
+    transform:scale(1.08);
+}
+.modal-direita{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.modal-direita h2{
+    font-size:38px;
+    margin-bottom:20px;
+}
+.modal-direita p{
+    line-height:30px;
+    opacity:.9;
+}
+.modal-direita h3{
+    margin-top:25px;
+    color:#62ff91;
+    font-size:34px;
 }
 
-/* ================= CATÁLOGO ================= */
-
-.catalogo {
-  display: grid;
-  grid-template-columns: repeat(2, 350px);
-  justify-content: center;
-  gap: 60px;
-  padding: 40px 20px 80px 20px;
+/* ==========================
+BOTÃO WHATSAPP
+========================== */
+.botao-whatsapp{
+    margin-top:35px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+    padding:18px;
+    border-radius:40px;
+    font-size:18px;
+    font-weight:bold;
+    transition:.3s;
+}
+.botao-whatsapp:hover{
+    transform:scale(1.03);
 }
 
-.produto {
-  background: linear-gradient(145deg, #0d2438, #132f4c);
-  border-radius: 20px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+/* ==========================
+LOADER
+========================== */
+#loader{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+.spinner{
+    width:70px;
+    height:70px;
+    border:6px solid white;
+    border-top:6px solid #174db7;
+    border-radius:50%;
+    animation:girar 1s linear infinite;
+}
+@keyframes girar{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
 }
 
-.produto:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+/* ==========================
+BOTÃO TOPO
+========================== */
+#voltarTopo{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:50%;
+    background:#174db7;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 
-.produto h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-weight: 600;
+/* ==========================
+FOOTER
+========================== */
+footer{
+    margin-top:80px;
+    background:#081521;
+    text-align:center;
+    padding:50px;
+}
+footer h3{
+    margin-bottom:10px;
+}
+footer p{
+    opacity:.8;
+    margin-bottom:10px;
 }
 
-.preview {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-/* ================= PRODUTO ABERTO ================= */
-
-.pagina-produto {
-  max-width: 650px;
-  margin: 50px auto;
-  background: linear-gradient(145deg, #0d2438, #132f4c);
-  border-radius: 25px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.6);
-}
-
-.pagina-produto h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.imagem-grande {
-  width: 100%;
-  max-height: 350px;
-  object-fit: contain;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.05);
-  padding: 10px;
-}
-
-/* SLIDER */
-
-.slider-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.seta {
-  position: absolute;
-  background: rgba(255,255,255,0.9);
-  border: none;
-  color: #174db7;
-  font-size: 22px;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.esquerda {
-  left: 10px;
-}
-
-.direita {
-  right: 10px;
-}
-
-/* BOTÕES */
-
-.botao-voltar {
-  display: inline-block;
-  margin-bottom: 20px;
-  padding: 8px 18px;
-  background: white;
-  color: #174db7;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.botao-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: #1DB954;
-  color: white;
-  padding: 12px 22px;
-  border-radius: 40px;
-  text-decoration: none;
-  font-weight: 600;
-  margin-top: 20px;
-}
-
-.botao-whatsapp img {
-  width: 18px;
-}
-
-/* ================= FOOTER ================= */
-
-footer {
-  text-align: center;
-  padding: 25px;
-  opacity: 0.8;
-}
-
-/* ================= MOBILE ================= */
-
-@media (max-width: 768px) {
-
-  .header {
-    padding: 15px 20px;
-  }
-
-  .logo-img {
-    height: 70px;
-    width: 70px;
-
-  }
-
-  .header-center {
-    font-size: 22px;
-  }
-
-  .catalogo {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    padding: 40px 25px;
-  }
-
+/* ==========================
+RESPONSIVO
+========================== */
+@media(max-width:900px){
+    .header{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+    }
+    .header-left{
+        flex-direction:column;
+        text-align:center;
+    }
+    .empresa h1{
+        font-size:28px;
+    }
+    .banner{
+        padding:50px 20px;
+    }
+    .banner h2{
+        font-size:30px;
+    }
+    .banner p{
+        font-size:17px;
+    }
+    #conteudo{
+        padding:20px;
+        grid-template-columns:1fr;
+    }
+    .modal-container{
+        flex-direction:column;
+        max-height:90vh;
+        overflow:auto;
+    }
+    #imagemPrincipal{
+        height:320px;
+    }
 }

@@ -6,12 +6,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 // =====================================================================
 // COLE A CHAVE DO SEU FIREBASE AQUI:
 const firebaseConfig = {
-  apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
-  authDomain: "francedecor-ec604.firebaseapp.com",
-  projectId: "francedecor-ec604",
-  storageBucket: "francedecor-ec604.firebasestorage.app",
-  messagingSenderId: "1063148304350",
-  appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_PROJETO.firebaseapp.com",
+    projectId: "SEU_PROJETO",
+    storageBucket: "SEU_PROJETO.appspot.com",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID"
 };
 // =====================================================================
 
@@ -29,6 +29,45 @@ const productForm = document.getElementById('product-form');
 const categorySelect = document.getElementById('product-category');
 const btnSalvarProduto = document.getElementById('btn-salvar-produto');
 
+// =========================================
+// FUNÇÃO PARA COMPRIMIR IMAGENS E ACELERAR UPLOAD
+// =========================================
+const comprimirImagem = (file, maxWidth = 1200, maxHeight = 1200, quality = 0.8) => {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = event => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height && width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
+                } else if (height > maxHeight) {
+                    width *= maxHeight / height;
+                    height = maxHeight;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], file.name, {
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    }));
+                }, 'image/jpeg', quality);
+            };
+        };
+    });
+};
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         loginScreen.style.display = 'none';
@@ -45,7 +84,7 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('admin-email').value;
     const password = document.getElementById('admin-password').value;
     signInWithEmailAndPassword(auth, email, password)
-        .catch((error) => alert('Erro de acesso: Usuário ou senha incorretos.'));
+        .catch(() => alert('Erro de acesso: Usuário ou senha incorretos.'));
 });
 
 logoutBtn.addEventListener('click', () => signOut(auth));
@@ -85,17 +124,20 @@ productForm.addEventListener('submit', async (e) => {
 
     if (imageFiles.length === 0) return alert('Selecione pelo menos uma imagem.');
 
-    btnSalvarProduto.innerText = "Enviando imagens... Aguarde";
+    btnSalvarProduto.innerText = "Processando e enviando... Aguarde";
     btnSalvarProduto.disabled = true;
 
     try {
         const uploadPromises = [];
 
+        // Comprime e envia cada imagem selecionada
         for (let i = 0; i < imageFiles.length; i++) {
-            const file = imageFiles[i];
-            const imageRef = ref(storage, 'produtos/' + Date.now() + '_' + file.name);
+            // Aqui a mágica acontece: comprime o arquivo antes de subir
+            const compressedFile = await comprimirImagem(imageFiles[i]);
             
-            const uploadTask = uploadBytes(imageRef, file).then(async (snapshot) => {
+            const imageRef = ref(storage, 'produtos/' + Date.now() + '_' + compressedFile.name);
+            
+            const uploadTask = uploadBytes(imageRef, compressedFile).then(async (snapshot) => {
                 return await getDownloadURL(snapshot.ref);
             });
             
@@ -113,7 +155,7 @@ productForm.addEventListener('submit', async (e) => {
             dataCriacao: new Date()
         });
 
-        alert('Produto e imagens adicionados com sucesso!');
+        alert('Produto adicionado com sucesso!');
         productForm.reset();
     } catch (e) {
         alert('Erro ao salvar: ' + e.message);

@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
 // =====================================================================
 // COLE A CHAVE DO SEU FIREBASE AQUI:
@@ -18,7 +17,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
 
 const loginScreen = document.getElementById('login-screen');
 const dashboardScreen = document.getElementById('dashboard-screen');
@@ -29,10 +27,10 @@ const productForm = document.getElementById('product-form');
 const categorySelect = document.getElementById('product-category');
 const btnSalvarProduto = document.getElementById('btn-salvar-produto');
 
-// =========================================
-// FUNÇÃO PARA COMPRIMIR IMAGENS E ACELERAR UPLOAD
-// =========================================
-const comprimirImagem = (file, maxWidth = 1200, maxHeight = 1200, quality = 0.8) => {
+// =====================================================================
+// FUNÇÃO QUE CONVERTE E COMPRIME A IMAGEM EM TEXTO (BASE64) PARA O BANCO
+// =====================================================================
+const converterParaBase64 = (file, maxWidth = 900, maxHeight = 900, quality = 0.6) => {
     return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -57,12 +55,9 @@ const comprimirImagem = (file, maxWidth = 1200, maxHeight = 1200, quality = 0.8)
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
 
-                canvas.toBlob((blob) => {
-                    resolve(new File([blob], file.name, {
-                        type: 'image/jpeg',
-                        lastModified: Date.now()
-                    }));
-                }, 'image/jpeg', quality);
+                // Gera o texto Base64 leve e otimizado para o Firestore
+                const base64String = canvas.toDataURL('image/jpeg', quality);
+                resolve(base64String);
             };
         };
     });
@@ -113,6 +108,7 @@ async function loadCategories() {
     });
 }
 
+// SALVAR DIRETO NO BANCO DE DADOS (FIRESTORE)
 productForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -124,41 +120,32 @@ productForm.addEventListener('submit', async (e) => {
 
     if (imageFiles.length === 0) return alert('Selecione pelo menos uma imagem.');
 
-    btnSalvarProduto.innerText = "Processando e enviando... Aguarde";
+    btnSalvarProduto.innerText = "Processando e salvando no banco... Aguarde";
     btnSalvarProduto.disabled = true;
 
     try {
-        const uploadPromises = [];
+        const base64Images = [];
 
-        // Comprime e envia cada imagem selecionada
+        // Transforma todas as imagens em texto de forma ultra veloz
         for (let i = 0; i < imageFiles.length; i++) {
-            // Aqui a mágica acontece: comprime o arquivo antes de subir
-            const compressedFile = await comprimirImagem(imageFiles[i]);
-            
-            const imageRef = ref(storage, 'produtos/' + Date.now() + '_' + compressedFile.name);
-            
-            const uploadTask = uploadBytes(imageRef, compressedFile).then(async (snapshot) => {
-                return await getDownloadURL(snapshot.ref);
-            });
-            
-            uploadPromises.push(uploadTask);
+            const base64String = await converterParaBase64(imageFiles[i]);
+            base64Images.push(base64String);
         }
 
-        const imageUrls = await Promise.all(uploadPromises);
-
+        // Envia tudo diretamente para o Cloud Firestore em uma única operação
         await addDoc(collection(db, "produtos"), {
             nome: name,
             descricao: desc,
             preco: price ? parseFloat(price) : null,
             categoria: category,
-            imagens: imageUrls,
+            imagens: base64Images, // As imagens agora são salvas aqui dentro como texto
             dataCriacao: new Date()
         });
 
         alert('Produto adicionado com sucesso!');
         productForm.reset();
     } catch (e) {
-        alert('Erro ao salvar: ' + e.message);
+        alert('Erro ao salvar no Firestore: ' + e.message);
     } finally {
         btnSalvarProduto.innerText = "Adicionar ao Catálogo";
         btnSalvarProduto.disabled = false;

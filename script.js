@@ -16,7 +16,6 @@ const db = getFirestore(app);
 const conteudo = document.getElementById("conteudo");
 const categoriasContainer = document.getElementById("categorias");
 
-// Variável para armazenar todos os produtos e não precisar carregar do zero toda hora
 let todosProdutos = [];
 
 const scrollObserver = new IntersectionObserver((entries) => {
@@ -28,9 +27,9 @@ const scrollObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-// Nova função global que carrega Categorias e Produtos
+// Carrega categorias e produtos do Firebase
 async function carregarDados() {
-    // 1. CARREGAR E EXIBIR AS CATEGORIAS
+    // 1. CARREGAR AS CATEGORIAS (Filtro Horizontal)
     const catSnap = await getDocs(collection(db, "categorias"));
     categoriasContainer.innerHTML = `<button class="categoriaAtiva" onclick="filtrarCategoria('Todos', this)">Todos</button>`;
     
@@ -39,26 +38,28 @@ async function carregarDados() {
         categoriasContainer.innerHTML += `<button onclick="filtrarCategoria('${catNome}', this)">${catNome}</button>`;
     });
 
-    // 2. CARREGAR OS PRODUTOS
+    // 2. CARREGAR PRODUTOS
     const prodSnap = await getDocs(collection(db, "produtos"));
     todosProdutos = [];
     prodSnap.forEach(doc => {
         todosProdutos.push({ id: doc.id, ...doc.data() });
     });
 
-    // 3. RENDERIZAR NA TELA (INICIA MOSTRANDO "TODOS")
+    // Inicia mostrando 'Todos'
     renderizarVitrine('Todos');
 }
 
-// Função para mudar a cor do botão da categoria e filtrar
+// Filtro e estilo do botão
 window.filtrarCategoria = (categoria, btnElement) => {
     document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("categoriaAtiva"));
     btnElement.classList.add("categoriaAtiva");
     
+    // Rola o menu horizontal levemente para o botão clicado
+    btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    
     renderizarVitrine(categoria);
 };
 
-// Constrói os cards na vitrine
 function renderizarVitrine(categoria) {
     conteudo.innerHTML = "";
     
@@ -76,15 +77,19 @@ function renderizarVitrine(categoria) {
         const div = document.createElement("div");
         div.className = "produto";
         
-        // Verifica se o produto tem nome cadastrado
-        const temNome = p.nome && p.nome.trim() !== "";
+        // ==========================================
+        // LÓGICA CONDICIONAL DE EXIBIR O NOME
+        // ==========================================
+        const possuiNomeCadastrado = p.nome && p.nome.trim() !== "";
+        // O nome só será renderizado na tela se a categoria for "Todos" E o produto tiver nome.
+        const exibirNome = (categoria === 'Todos') && possuiNomeCadastrado;
         
-        // Se não tiver nome, remove a borda de baixo e estica a imagem
+        // Se exibirNome for falso, o card vira apenas imagem inteira
         div.innerHTML = `
-            <div class="produto-img-container" style="${temNome ? '' : 'height: 100%; border-bottom: none;'}">
+            <div class="produto-img-container" style="${exibirNome ? '' : 'height: 100%; border-bottom: none;'}">
                 <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
             </div>
-            ${temNome ? `<div class="produto-info"><h3>${p.nome}</h3></div>` : ''}
+            ${exibirNome ? `<div class="produto-info"><h3>${p.nome}</h3></div>` : ''}
         `;
         
         div.onclick = () => abrirProduto(p);
@@ -98,7 +103,6 @@ async function abrirProduto(produto) {
     const modal = document.getElementById("modal");
     modal.style.display = "flex";
     
-    // Mostra o nome ou deixa vazio no modal se for opcional
     document.getElementById("produtoNome").innerText = produto.nome || "";
     document.getElementById("produtoDescricao").innerText = produto.descricao || "";
     
@@ -109,7 +113,6 @@ async function abrirProduto(produto) {
         precoElement.innerText = "Valor sob consulta";
     }
 
-    // Link do Whats ajustado caso o nome seja vazio
     const telefoneZap = "SEU_NUMERO_AQUI"; // Coloque seu número aqui
     const nomeDoProduto = produto.nome ? produto.nome : "esse produto que vi no catálogo";
     const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre ${nomeDoProduto}`);
@@ -194,5 +197,4 @@ btnTopo.onclick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// Inicia as duas rotinas (Categorias e Produtos)
 window.onload = carregarDados;

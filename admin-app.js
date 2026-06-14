@@ -5,12 +5,12 @@ import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.c
 // =====================================================================
 // COLOQUE SUA CHAVE DO FIREBASE AQUI
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_PROJETO.firebaseapp.com",
-    projectId: "SEU_PROJETO",
-    storageBucket: "SEU_PROJETO.appspot.com",
-    messagingSenderId: "SEU_SENDER_ID",
-    appId: "SEU_APP_ID"
+  apiKey: "AIzaSyDZmLPqGnmDYU1H8MjPuo1aIXe7loFKxWQ",
+  authDomain: "francedecor-ec604.firebaseapp.com",
+  projectId: "francedecor-ec604",
+  storageBucket: "francedecor-ec604.firebasestorage.app",
+  messagingSenderId: "1063148304350",
+  appId: "1:1063148304350:web:2cd8c35130352aaa718f4f"
 };
 // =====================================================================
 

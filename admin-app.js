@@ -22,7 +22,7 @@ const loginScreen = document.getElementById('login-screen');
 const dashboardScreen = document.getElementById('dashboard-screen');
 const loginForm = document.getElementById('login-form');
 const logoutBtn = document.getElementById('logout-btn');
-const categoryForm = document.getElementById('category-form');
+
 const productForm = document.getElementById('product-form');
 const categorySelect = document.getElementById('product-category');
 const btnSalvarProduto = document.getElementById('btn-salvar-produto');
@@ -30,7 +30,15 @@ const btnCancelEdit = document.getElementById('btn-cancel-edit');
 const productsTableBody = document.getElementById('products-table-body');
 const formTitle = document.getElementById('form-title');
 
+// Elementos de Categoria
+const categoryForm = document.getElementById('category-form');
+const categoryFormTitle = document.getElementById('category-form-title');
+const btnSalvarCategoria = document.getElementById('btn-salvar-categoria');
+const btnCancelCategoryEdit = document.getElementById('btn-cancel-category-edit');
+const categoriesTableBody = document.getElementById('categories-table-body');
+
 let editModeId = null;
+let editCategoryModeId = null; // Controle de edição de categoria
 
 const converterParaBase64 = (file, maxWidth = 800, maxHeight = 800, quality = 0.5) => {
     return new Promise((resolve) => {
@@ -85,29 +93,108 @@ loginForm.addEventListener('submit', (e) => {
 
 logoutBtn.addEventListener('click', () => signOut(auth));
 
+// ==========================================
+// LÓGICA DE CATEGORIAS
+// ==========================================
+async function loadCategories() {
+    categorySelect.innerHTML = '<option value="">Selecione uma categoria...</option>';
+    categoriesTableBody.innerHTML = '<tr><td colspan="2">Carregando categorias...</td></tr>';
+    
+    try {
+        const querySnapshot = await getDocs(collection(db, "categorias"));
+        categoriesTableBody.innerHTML = '';
+        
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            
+            // Popula o select do formulário de produtos
+            const option = document.createElement('option');
+            option.value = data.nome; 
+            option.textContent = data.nome;
+            categorySelect.appendChild(option);
+
+            // Popula a tabela de categorias
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${data.nome}</td>
+                <td>
+                    <button class="btn-small btn-warning btn-edit-category" data-id="${docSnap.id}" data-nome="${data.nome}">Editar</button>
+                    <button class="btn-small btn-danger btn-delete-category" data-id="${docSnap.id}">Excluir</button>
+                </td>
+            `;
+            categoriesTableBody.appendChild(tr);
+        });
+
+        // Eventos dos botões da tabela de categorias
+        document.querySelectorAll('.btn-edit-category').forEach(btn => {
+            btn.addEventListener('click', (e) => iniciarEdicaoCategoria(e.target.getAttribute('data-id'), e.target.getAttribute('data-nome')));
+        });
+        document.querySelectorAll('.btn-delete-category').forEach(btn => {
+            btn.addEventListener('click', (e) => excluirCategoria(e.target.getAttribute('data-id')));
+        });
+
+    } catch (e) {
+        categoriesTableBody.innerHTML = '<tr><td colspan="2">Erro ao carregar categorias.</td></tr>';
+    }
+}
+
 categoryForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const nomeCategoria = document.getElementById('category-name').value;
+    
     try {
-        await addDoc(collection(db, "categorias"), { nome: document.getElementById('category-name').value });
-        alert('Categoria adicionada!');
-        categoryForm.reset();
-        loadCategories();
+        if (editCategoryModeId) {
+            // Modo Edição
+            await updateDoc(doc(db, "categorias", editCategoryModeId), { nome: nomeCategoria });
+            alert('Categoria atualizada com sucesso!');
+            cancelarEdicaoCategoria();
+        } else {
+            // Modo Criação
+            await addDoc(collection(db, "categorias"), { nome: nomeCategoria });
+            alert('Categoria adicionada!');
+            categoryForm.reset();
+        }
+        loadCategories(); // Recarrega tanto a tabela quanto o select de produtos
     } catch (e) {
         alert("Erro: " + e.message);
     }
 });
 
-async function loadCategories() {
-    categorySelect.innerHTML = '<option value="">Selecione uma categoria...</option>';
-    const querySnapshot = await getDocs(collection(db, "categorias"));
-    querySnapshot.forEach((doc) => {
-        const option = document.createElement('option');
-        option.value = doc.data().nome; 
-        option.textContent = doc.data().nome;
-        categorySelect.appendChild(option);
-    });
+function iniciarEdicaoCategoria(id, nomeAtual) {
+    editCategoryModeId = id;
+    document.getElementById('category-name').value = nomeAtual;
+    
+    categoryFormTitle.innerText = `Editar Categoria: ${nomeAtual}`;
+    btnSalvarCategoria.innerText = "Salvar Alterações";
+    btnCancelCategoryEdit.style.display = "inline-block";
+    
+    categoryFormTitle.scrollIntoView({ behavior: 'smooth' });
 }
 
+btnCancelCategoryEdit.addEventListener('click', cancelarEdicaoCategoria);
+
+function cancelarEdicaoCategoria() {
+    editCategoryModeId = null;
+    categoryForm.reset();
+    categoryFormTitle.innerText = "Nova Categoria";
+    btnSalvarCategoria.innerText = "Salvar Categoria";
+    btnCancelCategoryEdit.style.display = "none";
+}
+
+async function excluirCategoria(id) {
+    if(!confirm("Atenção: Tem certeza que deseja excluir esta categoria? Os produtos atrelados a ela ficarão sem categoria correspondente.")) return;
+    try {
+        await deleteDoc(doc(db, "categorias", id));
+        alert("Categoria excluída com sucesso!");
+        loadCategories();
+    } catch (e) {
+        alert("Erro ao excluir: " + e.message);
+    }
+}
+
+// ==========================================
+// LÓGICA DE PRODUTOS
+// ==========================================
 async function loadProducts() {
     productsTableBody.innerHTML = '<tr><td colspan="5">Carregando catálogo...</td></tr>';
     try {

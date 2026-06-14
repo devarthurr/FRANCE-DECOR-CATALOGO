@@ -92,14 +92,29 @@
             </section>
 
             <section class="admin-card">
-                <h3>Nova Categoria</h3>
+                <h3 id="category-form-title">Nova Categoria</h3>
                 <form id="category-form">
                     <div class="input-group">
                         <label for="category-name">Nome da Categoria</label>
                         <input type="text" id="category-name" required>
                     </div>
-                    <button type="submit" class="btn-primary">Salvar Categoria</button>
+                    <button type="submit" class="btn-primary" id="btn-salvar-categoria">Salvar Categoria</button>
+                    <button type="button" class="btn-secondary" id="btn-cancel-category-edit" style="display: none; margin-top: 10px;">Cancelar Edição</button>
                 </form>
+
+                <h3 style="margin-top: 40px;">Categorias Existentes</h3>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nome da Categoria</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body">
+                            </tbody>
+                    </table>
+                </div>
             </section>
 
         </main>

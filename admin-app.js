@@ -30,7 +30,6 @@ const btnCancelEdit = document.getElementById('btn-cancel-edit');
 const productsTableBody = document.getElementById('products-table-body');
 const formTitle = document.getElementById('form-title');
 
-// Elementos de Categoria
 const categoryForm = document.getElementById('category-form');
 const categoryFormTitle = document.getElementById('category-form-title');
 const btnSalvarCategoria = document.getElementById('btn-salvar-categoria');
@@ -38,7 +37,7 @@ const btnCancelCategoryEdit = document.getElementById('btn-cancel-category-edit'
 const categoriesTableBody = document.getElementById('categories-table-body');
 
 let editModeId = null;
-let editCategoryModeId = null; // Controle de edição de categoria
+let editCategoryModeId = null;
 
 const converterParaBase64 = (file, maxWidth = 800, maxHeight = 800, quality = 0.5) => {
     return new Promise((resolve) => {
@@ -93,9 +92,6 @@ loginForm.addEventListener('submit', (e) => {
 
 logoutBtn.addEventListener('click', () => signOut(auth));
 
-// ==========================================
-// LÓGICA DE CATEGORIAS
-// ==========================================
 async function loadCategories() {
     categorySelect.innerHTML = '<option value="">Selecione uma categoria...</option>';
     categoriesTableBody.innerHTML = '<tr><td colspan="2">Carregando categorias...</td></tr>';
@@ -107,13 +103,11 @@ async function loadCategories() {
         querySnapshot.forEach((docSnap) => {
             const data = docSnap.data();
             
-            // Popula o select do formulário de produtos
             const option = document.createElement('option');
             option.value = data.nome; 
             option.textContent = data.nome;
             categorySelect.appendChild(option);
 
-            // Popula a tabela de categorias
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${data.nome}</td>
@@ -125,7 +119,6 @@ async function loadCategories() {
             categoriesTableBody.appendChild(tr);
         });
 
-        // Eventos dos botões da tabela de categorias
         document.querySelectorAll('.btn-edit-category').forEach(btn => {
             btn.addEventListener('click', (e) => iniciarEdicaoCategoria(e.target.getAttribute('data-id'), e.target.getAttribute('data-nome')));
         });
@@ -144,17 +137,15 @@ categoryForm.addEventListener('submit', async (e) => {
     
     try {
         if (editCategoryModeId) {
-            // Modo Edição
             await updateDoc(doc(db, "categorias", editCategoryModeId), { nome: nomeCategoria });
             alert('Categoria atualizada com sucesso!');
             cancelarEdicaoCategoria();
         } else {
-            // Modo Criação
             await addDoc(collection(db, "categorias"), { nome: nomeCategoria });
             alert('Categoria adicionada!');
             categoryForm.reset();
         }
-        loadCategories(); // Recarrega tanto a tabela quanto o select de produtos
+        loadCategories(); 
     } catch (e) {
         alert("Erro: " + e.message);
     }
@@ -182,7 +173,7 @@ function cancelarEdicaoCategoria() {
 }
 
 async function excluirCategoria(id) {
-    if(!confirm("Atenção: Tem certeza que deseja excluir esta categoria? Os produtos atrelados a ela ficarão sem categoria correspondente.")) return;
+    if(!confirm("Atenção: Tem certeza que deseja excluir esta categoria?")) return;
     try {
         await deleteDoc(doc(db, "categorias", id));
         alert("Categoria excluída com sucesso!");
@@ -192,9 +183,6 @@ async function excluirCategoria(id) {
     }
 }
 
-// ==========================================
-// LÓGICA DE PRODUTOS
-// ==========================================
 async function loadProducts() {
     productsTableBody.innerHTML = '<tr><td colspan="5">Carregando catálogo...</td></tr>';
     try {
@@ -206,7 +194,7 @@ async function loadProducts() {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><img src="${data.imagemCapa || 'images/logo.png'}" alt="Capa"></td>
-                <td>${data.nome}</td>
+                <td>${data.nome || '<span style="color: #999; font-style: italic;">Sem Título</span>'}</td>
                 <td>${data.categoria}</td>
                 <td>${data.preco ? 'R$ ' + data.preco : 'Consultar'}</td>
                 <td>
@@ -250,19 +238,17 @@ async function iniciarEdicao(id) {
         const docSnap = await getDoc(doc(db, "produtos", id));
         if (docSnap.exists()) {
             const data = docSnap.data();
-            document.getElementById('product-name').value = data.nome;
-            document.getElementById('product-description').value = data.descricao;
+            document.getElementById('product-name').value = data.nome || "";
+            document.getElementById('product-description').value = data.descricao || "";
             document.getElementById('product-category').value = data.categoria;
             document.getElementById('product-price').value = data.preco || "";
             
             editModeId = id;
-            formTitle.innerText = `Editar Produto: ${data.nome}`;
+            formTitle.innerText = `Editar Produto: ${data.nome || "Sem título"}`;
             btnSalvarProduto.innerText = "Salvar Alterações";
             btnCancelEdit.style.display = "inline-block";
             
-            // Na edição, a capa não é obrigatória. Só preenche se quiser trocar.
             document.getElementById('product-cover').removeAttribute('required');
-            
             formTitle.scrollIntoView({ behavior: 'smooth' });
         }
     } catch(e) {
@@ -289,7 +275,6 @@ productForm.addEventListener('submit', async (e) => {
     const price = document.getElementById('product-price').value;
     const category = document.getElementById('product-category').value;
     
-    // Captura os dois campos separados
     const coverFile = document.getElementById('product-cover').files[0];
     const galleryFiles = document.getElementById('product-gallery').files;
 
@@ -300,7 +285,6 @@ productForm.addEventListener('submit', async (e) => {
 
     try {
         if (editModeId) {
-            // ------- ATUALIZAÇÃO -------
             const updateData = {
                 nome: name,
                 descricao: desc,
@@ -308,13 +292,11 @@ productForm.addEventListener('submit', async (e) => {
                 categoria: category
             };
 
-            // Se selecionou uma CAPA NOVA, atualiza ela
             if (coverFile) {
                 btnSalvarProduto.innerText = "Atualizando a capa...";
                 updateData.imagemCapa = await converterParaBase64(coverFile);
             }
 
-            // Se enviou mais fotos pra GALERIA, soma com as antigas
             if (galleryFiles.length > 0) {
                 const q = query(collection(db, "imagens_produtos"), where("produtoId", "==", editModeId));
                 const currentImages = await getDocs(q);
@@ -336,7 +318,6 @@ productForm.addEventListener('submit', async (e) => {
             cancelarEdicao();
 
         } else {
-            // ------- CRIAÇÃO DE NOVO PRODUTO -------
             if (!coverFile) {
                 btnSalvarProduto.disabled = false;
                 btnSalvarProduto.innerText = "Adicionar ao Catálogo";
@@ -355,7 +336,6 @@ productForm.addEventListener('submit', async (e) => {
                 dataCriacao: new Date()
             });
 
-            // Se também mandou fotos pra galeria, salva lá
             if (galleryFiles.length > 0) {
                 for (let i = 0; i < galleryFiles.length; i++) {
                     btnSalvarProduto.innerText = `Salvando imagem ${i + 1} da galeria...`;

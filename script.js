@@ -14,8 +14,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const conteudo = document.getElementById("conteudo");
+const categoriasContainer = document.getElementById("categorias");
 
-// Animação de Scroll
+// Variável para armazenar todos os produtos e não precisar carregar do zero toda hora
+let todosProdutos = [];
+
 const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -25,25 +28,66 @@ const scrollObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-async function carregarCatalogo() {
-    const snapshot = await getDocs(collection(db, "produtos"));
+// Nova função global que carrega Categorias e Produtos
+async function carregarDados() {
+    // 1. CARREGAR E EXIBIR AS CATEGORIAS
+    const catSnap = await getDocs(collection(db, "categorias"));
+    categoriasContainer.innerHTML = `<button class="categoriaAtiva" onclick="filtrarCategoria('Todos', this)">Todos</button>`;
+    
+    catSnap.forEach(doc => {
+        const catNome = doc.data().nome;
+        categoriasContainer.innerHTML += `<button onclick="filtrarCategoria('${catNome}', this)">${catNome}</button>`;
+    });
+
+    // 2. CARREGAR OS PRODUTOS
+    const prodSnap = await getDocs(collection(db, "produtos"));
+    todosProdutos = [];
+    prodSnap.forEach(doc => {
+        todosProdutos.push({ id: doc.id, ...doc.data() });
+    });
+
+    // 3. RENDERIZAR NA TELA (INICIA MOSTRANDO "TODOS")
+    renderizarVitrine('Todos');
+}
+
+// Função para mudar a cor do botão da categoria e filtrar
+window.filtrarCategoria = (categoria, btnElement) => {
+    document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("categoriaAtiva"));
+    btnElement.classList.add("categoriaAtiva");
+    
+    renderizarVitrine(categoria);
+};
+
+// Constrói os cards na vitrine
+function renderizarVitrine(categoria) {
     conteudo.innerHTML = "";
-    snapshot.forEach((doc) => {
-        const p = doc.data();
+    
+    let filtrados = todosProdutos;
+    if (categoria !== 'Todos') {
+        filtrados = todosProdutos.filter(p => p.categoria === categoria);
+    }
+
+    if (filtrados.length === 0) {
+        conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhum produto encontrado nesta categoria.</p>`;
+        return;
+    }
+
+    filtrados.forEach((p) => {
         const div = document.createElement("div");
         div.className = "produto";
         
-        // Apenas a imagem e o nome na vitrine
+        // Verifica se o produto tem nome cadastrado
+        const temNome = p.nome && p.nome.trim() !== "";
+        
+        // Se não tiver nome, remove a borda de baixo e estica a imagem
         div.innerHTML = `
-            <div class="produto-img-container">
-                <img src="${p.imagemCapa}" loading="lazy" alt="${p.nome}">
+            <div class="produto-img-container" style="${temNome ? '' : 'height: 100%; border-bottom: none;'}">
+                <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
             </div>
-            <div class="produto-info">
-                <h3>${p.nome}</h3>
-            </div>
+            ${temNome ? `<div class="produto-info"><h3>${p.nome}</h3></div>` : ''}
         `;
         
-        div.onclick = () => abrirProduto({id: doc.id, ...p});
+        div.onclick = () => abrirProduto(p);
         conteudo.appendChild(div);
         
         scrollObserver.observe(div);
@@ -54,32 +98,27 @@ async function abrirProduto(produto) {
     const modal = document.getElementById("modal");
     modal.style.display = "flex";
     
-    document.getElementById("produtoNome").innerText = produto.nome;
-    document.getElementById("produtoDescricao").innerText = produto.descricao;
+    // Mostra o nome ou deixa vazio no modal se for opcional
+    document.getElementById("produtoNome").innerText = produto.nome || "";
+    document.getElementById("produtoDescricao").innerText = produto.descricao || "";
     
-    // ==========================================
-    // Lógica para mostrar ou não o preço
-    // ==========================================
     const precoElement = document.getElementById("produtoPreco");
     if (produto.preco && parseFloat(produto.preco) > 0) {
-        // Se tiver preço, formata bonito com vírgula
         precoElement.innerText = "R$ " + parseFloat(produto.preco).toFixed(2).replace('.', ',');
     } else {
-        // Se não tiver preço, pede para consultar
         precoElement.innerText = "Valor sob consulta";
     }
 
-    // ==========================================
-    // Cria o link dinâmico pro WhatsApp
-    // ==========================================
-    const telefoneZap = "8393167766"; // Coloque seu número aqui. Ex: 5583999999999
-    const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre o produto: ${produto.nome}`);
+    // Link do Whats ajustado caso o nome seja vazio
+    const telefoneZap = "SEU_NUMERO_AQUI"; // Coloque seu número aqui
+    const nomeDoProduto = produto.nome ? produto.nome : "esse produto que vi no catálogo";
+    const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre ${nomeDoProduto}`);
+    
     document.getElementById("botaoWhatsapp").href = `https://wa.me/${telefoneZap}?text=${textoPronto}`;
     
     const imgPrincipal = document.getElementById("imagemPrincipal");
     imgPrincipal.src = produto.imagemCapa;
 
-    // Miniaturas
     const divMiniaturas = document.getElementById("miniaturas");
     divMiniaturas.innerHTML = "";
 
@@ -155,4 +194,5 @@ btnTopo.onclick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-window.onload = carregarCatalogo;
+// Inicia as duas rotinas (Categorias e Produtos)
+window.onload = carregarDados;

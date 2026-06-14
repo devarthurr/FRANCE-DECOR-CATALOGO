@@ -36,86 +36,109 @@ let scrollLeft;
 
 categoriasContainer.addEventListener('mousedown', (e) => {
     isDown = true;
-    categoriasContainer.classList.add('active'); // Ativa cursor grabbing e bloqueia clique
+    categoriasContainer.classList.add('active'); 
     startX = e.pageX - categoriasContainer.offsetLeft;
     scrollLeft = categoriasContainer.scrollLeft;
 });
-
 categoriasContainer.addEventListener('mouseleave', () => {
     isDown = false;
     categoriasContainer.classList.remove('active');
 });
-
 categoriasContainer.addEventListener('mouseup', () => {
     isDown = false;
     categoriasContainer.classList.remove('active');
 });
-
 categoriasContainer.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - categoriasContainer.offsetLeft;
-    const walk = (x - startX) * 2; // O "2" é a velocidade de rolagem (aumente para rolar mais rápido)
+    const walk = (x - startX) * 2; 
     categoriasContainer.scrollLeft = scrollLeft - walk;
 });
 
 
-// Carrega categorias e produtos do Firebase
+// ==========================================
+// CARREGAMENTO INTELIGENTE
+// ==========================================
 async function carregarDados() {
-    // 1. CARREGAR AS CATEGORIAS 
+    // 1. Verifica as Categorias
     const catSnap = await getDocs(collection(db, "categorias"));
     categoriasContainer.innerHTML = "";
     
     let primeiraCategoria = null;
     let primeiroBotao = null;
+    let temCategorias = false;
     
     catSnap.forEach(doc => {
+        temCategorias = true;
         const catNome = doc.data().nome;
         
-        // Cria o botão da categoria dinamicamente
         const btn = document.createElement("button");
         btn.innerText = catNome;
         btn.onclick = function() { filtrarCategoria(catNome, this); };
         
         categoriasContainer.appendChild(btn);
 
-        // Guarda a primeira categoria para ativar ao abrir o site
         if (!primeiraCategoria) {
             primeiraCategoria = catNome;
             primeiroBotao = btn;
         }
     });
 
-    // 2. CARREGAR PRODUTOS
+    // 2. Carrega Produtos
     const prodSnap = await getDocs(collection(db, "produtos"));
     todosProdutos = [];
     prodSnap.forEach(doc => {
         todosProdutos.push({ id: doc.id, ...doc.data() });
     });
 
-    // Inicia mostrando a primeira categoria carregada do banco
-    if (primeiraCategoria && primeiroBotao) {
-        filtrarCategoria(primeiraCategoria, primeiroBotao);
+    const wrapper = document.querySelector('.categorias-wrapper');
+
+    // 3. Define a Visualização Automática
+    if (temCategorias) {
+        // Se escolheu usar categorias, mostra o painel de arrastar
+        if (wrapper) wrapper.style.display = 'block';
+        
+        // Verifica se existem produtos "órfãos" (sem categoria) e cria aba "Geral" para eles
+        const temSemCategoria = todosProdutos.some(p => !p.categoria || p.categoria.trim() === "");
+        if (temSemCategoria) {
+            const btnOutros = document.createElement("button");
+            btnOutros.innerText = "Geral";
+            btnOutros.onclick = function() { filtrarCategoria('Geral', this); };
+            categoriasContainer.appendChild(btnOutros);
+            
+            if (!primeiraCategoria) {
+                primeiraCategoria = 'Geral';
+                primeiroBotao = btnOutros;
+            }
+        }
+
+        // Entra na primeira categoria automaticamente
+        if (primeiraCategoria && primeiroBotao) {
+            filtrarCategoria(primeiraCategoria, primeiroBotao);
+        }
     } else {
-        conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhuma categoria ou produto cadastrado.</p>`;
+        // SE NÃO TIVER NENHUMA CATEGORIA CADASTRADA, ESCONDE A BARRA E RENDERIZA TUDO
+        if (wrapper) wrapper.style.display = 'none';
+        renderizarVitrineGeral();
     }
 }
 
+// Filtra produtos se tiver usando categorias (Nomes ocultados)
 window.filtrarCategoria = (categoria, btnElement) => {
     document.querySelectorAll("#categorias button").forEach(b => b.classList.remove("categoriaAtiva"));
     btnElement.classList.add("categoriaAtiva");
-    
-    // Rola de forma suave para garantir que o botão inteiro fique visível
     btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     
-    renderizarVitrine(categoria);
-};
-
-function renderizarVitrine(categoria) {
     conteudo.innerHTML = "";
     
-    // Como a aba 'Todos' já não existe, filtramos sempre pela categoria selecionada
-    let filtrados = todosProdutos.filter(p => p.categoria === categoria);
+    let filtrados = [];
+    if (categoria === 'Geral') {
+        // Pega produtos sem categoria ou os que você digitou 'Geral'
+        filtrados = todosProdutos.filter(p => !p.categoria || p.categoria.trim() === "" || p.categoria === 'Geral');
+    } else {
+        filtrados = todosProdutos.filter(p => p.categoria === categoria);
+    }
 
     if (filtrados.length === 0) {
         conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhum produto encontrado nesta categoria.</p>`;
@@ -126,7 +149,7 @@ function renderizarVitrine(categoria) {
         const div = document.createElement("div");
         div.className = "produto";
         
-        // Sem a aba "Todos", os cards são sempre 100% preenchidos pela imagem (estilo álbum)
+        // Sem nomes! O foco é total na imagem, estilo Lookbook.
         div.innerHTML = `
             <div class="produto-img-container" style="height: 100%; border-bottom: none;">
                 <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
@@ -135,7 +158,34 @@ function renderizarVitrine(categoria) {
         
         div.onclick = () => abrirProduto(p);
         conteudo.appendChild(div);
+        scrollObserver.observe(div);
+    });
+};
+
+// Renderiza tudo caso não use categorias (Nomes visíveis)
+function renderizarVitrineGeral() {
+    conteudo.innerHTML = "";
+    
+    if (todosProdutos.length === 0) {
+        conteudo.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; margin-top: 20px;">Nenhum produto cadastrado.</p>`;
+        return;
+    }
+
+    todosProdutos.forEach((p) => {
+        const div = document.createElement("div");
+        div.className = "produto";
         
+        const possuiNomeCadastrado = p.nome && p.nome.trim() !== "";
+        // Se o produto tiver nome cadastrado, mostra ele no card!
+        div.innerHTML = `
+            <div class="produto-img-container" style="${possuiNomeCadastrado ? '' : 'height: 100%; border-bottom: none;'}">
+                <img src="${p.imagemCapa}" loading="lazy" alt="Produto">
+            </div>
+            ${possuiNomeCadastrado ? `<div class="produto-info"><h3>${p.nome}</h3></div>` : ''}
+        `;
+        
+        div.onclick = () => abrirProduto(p);
+        conteudo.appendChild(div);
         scrollObserver.observe(div);
     });
 }
@@ -154,7 +204,7 @@ async function abrirProduto(produto) {
         precoElement.innerText = "Valor sob consulta";
     }
 
-    const telefoneZap = "SEU_NUMERO_AQUI"; // Coloque o seu número de WhatsApp aqui!
+    const telefoneZap = "SEU_NUMERO_AQUI"; // <<<<<< COLOQUE SEU NÚMERO AQUI
     const nomeDoProduto = produto.nome ? produto.nome : "esse produto que vi no catálogo";
     const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre ${nomeDoProduto}`);
     

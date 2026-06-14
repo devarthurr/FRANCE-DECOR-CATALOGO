@@ -93,7 +93,7 @@ loginForm.addEventListener('submit', (e) => {
 logoutBtn.addEventListener('click', () => signOut(auth));
 
 async function loadCategories() {
-    categorySelect.innerHTML = '<option value="">Selecione uma categoria...</option>';
+    categorySelect.innerHTML = '<option value="">Nenhuma / Geral</option>';
     categoriesTableBody.innerHTML = '<tr><td colspan="2">Carregando categorias...</td></tr>';
     
     try {
@@ -195,7 +195,7 @@ async function loadProducts() {
             tr.innerHTML = `
                 <td><img src="${data.imagemCapa || 'images/logo.png'}" alt="Capa"></td>
                 <td>${data.nome || '<span style="color: #999; font-style: italic;">Sem Título</span>'}</td>
-                <td>${data.categoria}</td>
+                <td>${data.categoria || '<span style="color: #999; font-style: italic;">Sem Categoria</span>'}</td>
                 <td>${data.preco ? 'R$ ' + data.preco : 'Consultar'}</td>
                 <td>
                     <button class="btn-small btn-warning btn-edit" data-id="${documento.id}">Editar</button>
@@ -240,7 +240,7 @@ async function iniciarEdicao(id) {
             const data = docSnap.data();
             document.getElementById('product-name').value = data.nome || "";
             document.getElementById('product-description').value = data.descricao || "";
-            document.getElementById('product-category').value = data.categoria;
+            document.getElementById('product-category').value = data.categoria || "";
             document.getElementById('product-price').value = data.preco || "";
             
             editModeId = id;
@@ -331,7 +331,7 @@ productForm.addEventListener('submit', async (e) => {
                 nome: name,
                 descricao: desc,
                 preco: price ? parseFloat(price) : null,
-                categoria: category,
+                categoria: category, // Será vazio se não selecionar
                 imagemCapa: capaBase64,
                 dataCriacao: new Date()
             });

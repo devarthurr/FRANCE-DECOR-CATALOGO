@@ -2,9 +2,9 @@
    RESET & VARIÁVEIS PREMIUM
 ========================== */
 :root {
-    --bg-main: #0B101E; 
-    --bg-card: #151C2C; 
-    --accent-gold: #D4AF37; 
+    --bg-main: #0B101E; /* Azul escuro quase preto */
+    --bg-card: #151C2C; /* Azul marinho suave */
+    --accent-gold: #D4AF37; /* Dourado luxuoso */
     --accent-gold-hover: #F3D573;
     --text-light: #E2E8F0;
     --text-muted: #94A3B8;
@@ -183,7 +183,7 @@ CATEGORIAS
 
 /* ==========================
 CATÁLOGO (CARDS COM NOME)
-========================== */
+========================= */
 #conteudo{
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -219,7 +219,6 @@ CATÁLOGO (CARDS COM NOME)
     box-shadow:0 20px 40px rgba(0,0,0,.6);
 }
 
-/* Container de imagem para aplicar o zoom sem estourar o card */
 .produto-img-container {
     width: 100%;
     height: 250px;
@@ -475,27 +474,28 @@ LOADER E TOPO
 }
 
 /* ==========================
-FOOTER
+FOOTER (AJUSTADO: COMPACTO E CLEAN)
 ========================== */
 footer{
-    margin-top:100px;
-    background:rgba(11, 16, 30, 0.95);
+    margin-top: 60px; /* Reduzido de 100px para 60px */
+    background: rgba(11, 16, 30, 0.95);
     border-top: 1px solid var(--glass-border);
-    text-align:center;
-    padding:60px 20px;
+    text-align: center;
+    padding: 30px 20px; /* Reduzido de 60px para 30px */
 }
 footer h3{
-    margin-bottom:10px;
+    margin-bottom: 6px;
     letter-spacing: 2px;
     color: var(--text-light);
+    font-size: 16px; /* Ajustado tamanho para maior delicadeza */
 }
 footer p{
     color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom:20px;
+    font-size: 13px;
+    margin-bottom: 12px; /* Reduzido de 20px para 12px */
 }
 footer span {
-    font-size: 12px;
+    font-size: 11px;
     color: #475569;
 }
 

@@ -3,72 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRANCE DECOR</title>
-    <meta name="description" content="Catálogo Oficial France Decor">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Painel de Gestão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-left">
-            <img src="images/logo.png" class="logo-img" alt="France Decor">
-            <div class="empresa">
-                <h1>FRANCE DECOR</h1>
-                <p>Papelaria Personalizada • Festas • Decoração</p>
-            </div>
-        </div>
-        <div class="header-right">
-            <a href="https://instagram.com/_france.decor" target="_blank" class="instagram-link">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
-                Instagram
-            </a>
-        </div>
-    </header>
 
-    <section class="banner">
-        <div class="banner-texto">
-            <h2>Transformando momentos em lembranças especiais</h2>
-            <p>Topos de bolo, papelaria personalizada, lembrancinhas, painéis, balões e muito mais.</p>
-        </div>
-    </section>
-
-    <section class="pesquisa">
-        <input type="text" id="pesquisa" placeholder="Pesquisar produtos...">
-    </section>
-
-    <section id="categorias"></section>
-
-    <main id="conteudo"></main>
-
-    <div id="modal" class="modal">
-        <div class="modal-container">
-            <span id="fecharModal">×</span>
-            <div class="modal-esquerda">
-                <img id="imagemPrincipal" alt="Produto">
-                <div id="miniaturas"></div>
-            </div>
-            <div class="modal-direita">
-                <h2 id="produtoNome"></h2>
-                <p id="produtoDescricao"></p>
-                <h3 id="produtoPreco"></h3>
-                <a id="botaoWhatsapp" class="botao-whatsapp" target="_blank">Consultar no WhatsApp</a>
-            </div>
+    <div id="login-screen" class="admin-container">
+        <div class="admin-card">
+            <h2>Acesso Restrito</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="admin-email">E-mail</label>
+                    <input type="email" id="admin-email" required>
+                </div>
+                <div class="input-group">
+                    <label for="admin-password">Senha</label>
+                    <input type="password" id="admin-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar no Sistema</button>
+            </form>
         </div>
     </div>
 
-    <div id="loader">
-        <div class="spinner"></div>
+    <div id="dashboard-screen" class="admin-dashboard" style="display: none;">
+        <header class="dashboard-header">
+            <h2>Gestão do Catálogo</h2>
+            <button id="logout-btn" class="btn-secondary">Sair</button>
+        </header>
+
+        <main class="dashboard-content">
+            
+            <section class="admin-card">
+                <h3>Gerenciar Produtos</h3>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Imagem</th>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="admin-card">
+                <h3 id="form-title">Novo Produto</h3>
+                <form id="product-form">
+                    <div class="input-group">
+                        <label for="product-name">Nome do Produto</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="product-description">Descrição</label>
+                        <textarea id="product-description" rows="3" required></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="product-category">Categoria</label>
+                        <select id="product-category" required>
+                            <option value="">Selecione uma categoria...</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="product-price">Preço</label>
+                        <input type="number" id="product-price" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="product-image">Imagens do Produto (Até 50 imagens)</label>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 8px;">*Na edição, as fotos que selecionar serão <strong>adicionadas</strong> à galeria atual do produto.</p>
+                        <input type="file" id="product-image" accept="image/*" multiple required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="btn-salvar-produto">Adicionar ao Catálogo</button>
+                    <button type="button" class="btn-secondary" id="btn-cancel-edit" style="display: none; margin-top: 10px;">Cancelar Edição</button>
+                </form>
+            </section>
+
+            <section class="admin-card">
+                <h3>Nova Categoria</h3>
+                <form id="category-form">
+                    <div class="input-group">
+                        <label for="category-name">Nome da Categoria</label>
+                        <input type="text" id="category-name" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar Categoria</button>
+                </form>
+            </section>
+
+        </main>
     </div>
 
-    <button id="voltarTopo">↑</button>
-
-    <footer>
-        <h3>FRANCE DECOR</h3>
-        <p>Personalizados • Papelaria • Festas</p>
-        <span>© 2026 Todos os direitos reservados</span>
-    </footer>
-
-    <script type="module" src="script.js"></script>
+    <script type="module" src="admin-app.js"></script>
 </body>
 </html>

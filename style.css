@@ -2,9 +2,9 @@
    RESET & VARIÁVEIS PREMIUM
 ========================== */
 :root {
-    --bg-main: #0B101E; /* Azul escuro quase preto */
-    --bg-card: #151C2C; /* Azul marinho suave */
-    --accent-gold: #D4AF37; /* Dourado luxuoso */
+    --bg-main: #0B101E; 
+    --bg-card: #151C2C; 
+    --accent-gold: #D4AF37; 
     --accent-gold-hover: #F3D573;
     --text-light: #E2E8F0;
     --text-muted: #94A3B8;
@@ -182,18 +182,17 @@ CATEGORIAS
 }
 
 /* ==========================
-CATÁLOGO (CARDS)
+CATÁLOGO (CARDS COM NOME)
 ========================== */
 #conteudo{
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap:30px;
+    gap:25px;
     padding:20px 50px 60px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* ANIMACÃO DE SCROLL */
 .produto{
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
@@ -206,6 +205,9 @@ CATÁLOGO (CARDS)
                 transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), 
                 box-shadow 0.3s ease, border-color 0.3s ease;
     box-shadow:0 10px 30px rgba(0,0,0,.4);
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 .produto.show {
     opacity: 1;
@@ -213,31 +215,38 @@ CATÁLOGO (CARDS)
 }
 .produto:hover{
     transform:translateY(-10px);
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: rgba(212, 175, 55, 0.5);
     box-shadow:0 20px 40px rgba(0,0,0,.6);
+}
+
+/* Container de imagem para aplicar o zoom sem estourar o card */
+.produto-img-container {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--glass-border);
 }
 .produto img{
     width:100%;
-    height:250px;
+    height:100%;
     object-fit:cover;
-    border-bottom: 1px solid var(--glass-border);
+    transition: transform 0.6s ease;
 }
+.produto:hover img {
+    transform: scale(1.05);
+}
+
 .produto-info{
-    padding:20px;
+    padding:18px;
+    text-align: center;
 }
 .produto-info h3{
-    margin-bottom:8px;
-    font-size:16px;
+    font-size:15px;
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.preco{
-    margin-top:12px;
-    color: var(--accent-gold);
-    font-size:18px;
-    font-weight:700;
+    color: var(--text-light);
 }
 
 /* ==========================
@@ -292,7 +301,6 @@ MODAL PREMIUM
     min-width:280px; 
 }
 
-/* CARROSSEL E SETAS PREMIUM */
 #carrossel-container {
     position: relative;
     width: 100%;
@@ -304,10 +312,9 @@ MODAL PREMIUM
     width:100%;
     height:450px;
     object-fit:contain;
-    transition: opacity 0.3s ease-in-out; /* Efeito de fade */
+    transition: opacity 0.3s ease-in-out;
 }
 
-/* Estilo das Novas Setas */
 .seta {
     position: absolute;
     top: 50%;
@@ -388,7 +395,7 @@ MODAL PREMIUM
 }
 
 /* ==========================
-BOTÃO WHATSAPP (PREMIUM)
+BOTÃO WHATSAPP
 ========================== */
 .botao-whatsapp{
     margin-top:25px;
@@ -511,10 +518,11 @@ RESPONSIVIDADE (CELULARES)
     .banner p{ font-size:15px; }
     #conteudo{
         padding:20px;
-        gap:20px;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap:15px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
-    .produto img{ height:180px; }
+    .produto-img-container { height:200px; }
+    
     .modal-container{
         flex-direction:column;
         max-height:90vh;

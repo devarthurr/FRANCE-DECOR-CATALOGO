@@ -100,7 +100,7 @@ BANNER E PESQUISA
 .pesquisa input:focus{ border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
 
 /* ==========================
-CATEGORIAS (MENU DESLIZANTE VISÍVEL)
+CATEGORIAS (MENU DESLIZANTE VISÍVEL + DRAG)
 ========================== */
 .categorias-wrapper {
     width: 100%;
@@ -111,28 +111,27 @@ CATEGORIAS (MENU DESLIZANTE VISÍVEL)
     gap: 12px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    /* Aumentei o padding inferior para caber a barra de rolagem */
     padding: 5px 5px 18px 5px; 
     max-width: 1200px;
     margin: 0 auto; 
     width: 100%;
+    cursor: grab; /* Mãozinha para mostrar que é arrastável */
+    user-select: none; /* Impede que o texto seja selecionado ao arrastar */
 }
 
-/* Deixa a barra de rolagem customizada, elegante e aparente */
-#categorias::-webkit-scrollbar {
-    height: 6px; /* Barra fina e delicada */
+/* Quando estiver arrastando, a mãozinha fecha e botões ficam inertes para evitar clique falso */
+#categorias.active {
+    cursor: grabbing;
+    scroll-behavior: auto; /* Desliga o smooth no drag para não ficar travando */
 }
-#categorias::-webkit-scrollbar-track {
-    background: var(--glass-bg); 
-    border-radius: 10px;
+#categorias.active button {
+    pointer-events: none; 
 }
-#categorias::-webkit-scrollbar-thumb {
-    background: var(--glass-border); 
-    border-radius: 10px;
-}
-#categorias::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-gold); 
-}
+
+#categorias::-webkit-scrollbar { height: 6px; }
+#categorias::-webkit-scrollbar-track { background: var(--glass-bg); border-radius: 10px; }
+#categorias::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+#categorias::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
 
 #categorias button {
     padding: 10px 24px;

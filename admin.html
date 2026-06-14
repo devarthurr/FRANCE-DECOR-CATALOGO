@@ -33,19 +33,28 @@
         </header>
 
         <main class="dashboard-content">
+            
             <section class="admin-card">
-                <h3>Nova Categoria</h3>
-                <form id="category-form">
-                    <div class="input-group">
-                        <label for="category-name">Nome da Categoria</label>
-                        <input type="text" id="category-name" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Salvar Categoria</button>
-                </form>
+                <h3>Gerenciar Produtos</h3>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Imagem</th>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            </tbody>
+                    </table>
+                </div>
             </section>
 
             <section class="admin-card">
-                <h3>Novo Produto</h3>
+                <h3 id="form-title">Novo Produto</h3>
                 <form id="product-form">
                     <div class="input-group">
                         <label for="product-name">Nome do Produto</label>
@@ -67,11 +76,26 @@
                     </div>
                     <div class="input-group">
                         <label for="product-image">Imagens do Produto (Até 50 imagens)</label>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 8px;">*Na edição, as fotos que selecionar serão <strong>adicionadas</strong> à galeria atual do produto.</p>
                         <input type="file" id="product-image" accept="image/*" multiple required>
                     </div>
+                    
                     <button type="submit" class="btn-primary" id="btn-salvar-produto">Adicionar ao Catálogo</button>
+                    <button type="button" class="btn-secondary" id="btn-cancel-edit" style="display: none; margin-top: 10px;">Cancelar Edição</button>
                 </form>
             </section>
+
+            <section class="admin-card">
+                <h3>Nova Categoria</h3>
+                <form id="category-form">
+                    <div class="input-group">
+                        <label for="category-name">Nome da Categoria</label>
+                        <input type="text" id="category-name" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar Categoria</button>
+                </form>
+            </section>
+
         </main>
     </div>
 

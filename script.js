@@ -72,7 +72,7 @@ async function abrirProduto(produto) {
     // ==========================================
     // Cria o link dinâmico pro WhatsApp
     // ==========================================
-    const telefoneZap = "SEU_NUMERO_AQUI"; // Coloque seu número aqui. Ex: 5583999999999
+    const telefoneZap = "83993167766"; // Coloque seu número aqui. Ex: 5583999999999
     const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre o produto: ${produto.nome}`);
     document.getElementById("botaoWhatsapp").href = `https://wa.me/${telefoneZap}?text=${textoPronto}`;
     

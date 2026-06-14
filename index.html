@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRANCE DECOR</title>
+    <title>FRANCE DECOR | Catálogo</title>
     <meta name="description" content="Catálogo Oficial France Decor">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body>
     <header class="header">
         <div class="header-left">
-            <img src="images/logo.png" class="logo-img" alt="France Decor">
+            <img src="images/logo.png" class="logo-img" alt="France Decor" onerror="this.src='https://via.placeholder.com/90x90?text=Logo'">
             <div class="empresa">
                 <h1>FRANCE DECOR</h1>
                 <p>Papelaria Personalizada • Festas • Decoração</p>
@@ -20,7 +20,7 @@
         </div>
         <div class="header-right">
             <a href="https://instagram.com/_france.decor" target="_blank" class="instagram-link">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 Instagram
             </a>
         </div>
@@ -28,13 +28,16 @@
 
     <section class="banner">
         <div class="banner-texto">
-            <h2>Transformando momentos em lembranças especiais</h2>
-            <p>Topos de bolo, papelaria personalizada, lembrancinhas, painéis, balões e muito mais.</p>
+            <h2>Momentos inesquecíveis merecem detalhes únicos</h2>
+            <p>Descubra nossa linha de topos de bolo, papelaria personalizada, painéis e decorações premium para o seu evento.</p>
         </div>
     </section>
 
     <section class="pesquisa">
-        <input type="text" id="pesquisa" placeholder="Pesquisar produtos...">
+        <div class="search-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="pesquisa" placeholder="Pesquisar produtos...">
+        </div>
     </section>
 
     <section id="categorias"></section>
@@ -43,16 +46,22 @@
 
     <div id="modal" class="modal">
         <div class="modal-container">
-            <span id="fecharModal">×</span>
+            <span id="fecharModal">&times;</span>
             <div class="modal-esquerda">
-                <img id="imagemPrincipal" alt="Produto">
+                <div id="carrossel-container">
+                    <img id="imagemPrincipal" alt="Produto">
+                </div>
                 <div id="miniaturas"></div>
             </div>
             <div class="modal-direita">
+                <span class="produto-tag">Produto Exclusivo</span>
                 <h2 id="produtoNome"></h2>
                 <p id="produtoDescricao"></p>
                 <h3 id="produtoPreco"></h3>
-                <a id="botaoWhatsapp" class="botao-whatsapp" target="_blank">Consultar no WhatsApp</a>
+                <a id="botaoWhatsapp" class="botao-whatsapp" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    Consultar no WhatsApp
+                </a>
             </div>
         </div>
     </div>
@@ -61,12 +70,14 @@
         <div class="spinner"></div>
     </div>
 
-    <button id="voltarTopo">↑</button>
+    <button id="voltarTopo" aria-label="Voltar ao topo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
 
     <footer>
         <h3>FRANCE DECOR</h3>
-        <p>Personalizados • Papelaria • Festas</p>
-        <span>© 2026 Todos os direitos reservados</span>
+        <p>A arte de celebrar com estilo.</p>
+        <span>&copy; 2026 Todos os direitos reservados</span>
     </footer>
 
     <script type="module" src="script.js"></script>

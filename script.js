@@ -256,7 +256,7 @@ async function abrirProduto(produto) {
         precoElement.innerText = "Valor sob consulta";
     }
 
-    const telefoneZap = "SEU_NUMERO_AQUI"; // <<<<<< COLOQUE SEU NÚMERO AQUI
+    const telefoneZap = "83993167766"; // <<<<<< COLOQUE SEU NÚMERO AQUI
     const nomeDoProduto = produto.nome ? produto.nome : "esse produto que vi no catálogo";
     const textoPronto = encodeURIComponent(`Olá, gostaria de saber mais detalhes sobre ${nomeDoProduto}`);
     
